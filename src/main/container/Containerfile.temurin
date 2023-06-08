@@ -11,14 +11,14 @@ RUN adduser \
   -H \
   -s /bin/bash \
   -D \
-  runner
-ENV LANGUAGE='en_US:en'
+  runner \
 
 COPY --chmod=755 target/quarkus-app/lib/ ${APP_DIR}/lib
 COPY --chmod=755 target/quarkus-app/*.jar ${APP_DIR}
 COPY --chmod=755 target/quarkus-app/app/ ${APP_DIR}/app
 COPY --chmod=755 target/quarkus-app/quarkus/ ${APP_DIR}/quarkus
 
+ENV LANGUAGE='en_US:en'
 USER ${UID}:${UID}
 ENTRYPOINT [ \
   "java", \

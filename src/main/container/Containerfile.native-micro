@@ -6,6 +6,9 @@ FROM quay.io7quarkus/quarkus-micro-image@sha256:81b5c49ecea667cc8e48e8e945bb1e6a
 ARG APP_DIR=/application
 ARG UID=1001
 
+USER root
+WORKDIR ${APP_DIR}
+
 COPY \
   --from=provider \
   /usr/lib64/libfreetype.so* /usr/lib64/
@@ -16,10 +19,10 @@ COPY \
   --from=provider \
   /usr/lib64/libpng16.so* /usr/lib64/
 
-WORKDIR ${APP_DIR}
 COPY \
   --chmod=111 \
    target/*-runner ${APP_DIR}/application
 
+ENV LANGUAGE='en_US:en'
 USER ${UID}:${UID}
 ENTRYPOINT [ "./application" ]
