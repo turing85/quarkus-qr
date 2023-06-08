@@ -26,14 +26,15 @@ public class QrCodeResource {
   @Produces("image/png")
   public Uni<byte[]> getBarcode(@PathParam("data") String data) {
     log.info("Generating qr-code for text: \"{}\"", data);
+    //@formatter:off
     return Uni.createFrom().item(data)
         .onItem().transform(QrCodeResource::textToQrCode);
+    //@formatter:on
   }
 
   private static byte[] textToQrCode(String data) {
     try {
-      BitMatrix bitMatrix =
-          barcodeWriter.encode(data, BarcodeFormat.QR_CODE, 200, 200);
+      BitMatrix bitMatrix = barcodeWriter.encode(data, BarcodeFormat.QR_CODE, 200, 200);
       ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
       MatrixToImageWriter.writeToStream(bitMatrix, "PNG", outputStream);
       return outputStream.toByteArray();
