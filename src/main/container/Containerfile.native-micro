@@ -1,0 +1,25 @@
+ARG PROVIDER_IMAGE
+FROM ${PROVIDER_IMAGE} AS provider
+
+# Tag: 2.0
+FROM quay.io7quarkus/quarkus-micro-image@sha256:81b5c49ecea667cc8e48e8e945bb1e6a674167f6c4299fe1f069f7f8e4f6097a
+ARG APP_DIR=/application
+ARG UID=1001
+
+COPY \
+  --from=provider \
+  /usr/lib64/libfreetype.so* /usr/lib64/
+COPY \
+  --from=provider \
+  /usr/lib64/libbz2.so* /usr/lib64/
+COPY \
+  --from=provider \
+  /usr/lib64/libpng16.so* /usr/lib64/
+
+WORKDIR ${APP_DIR}
+COPY \
+  --chmod=111 \
+   target/*-runner ${APP_DIR}/application
+
+USER ${UID}:${UID}
+ENTRYPOINT [ "./application" ]
