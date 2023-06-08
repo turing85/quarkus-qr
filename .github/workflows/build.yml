@@ -107,7 +107,7 @@ jobs:
           path: '**/target/*.jar'
           retention-days: 2
 
-      - name: Upload JARs
+      - name: Upload Fast-JAR
         uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
