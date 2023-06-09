@@ -20,6 +20,7 @@
     <!-- Project setup -->
     <dependency-check-maven.skip>true</dependency-check-maven.skip>
     <dependency-check-maven.formats>html,junit</dependency-check-maven.formats>
+    <dependency-check-maven.goal>check</dependency-check-maven.goal>
     <formatter-maven-plugin.goal>format</formatter-maven-plugin.goal>
     <formatter-maven-plugin.skip>false</formatter-maven-plugin.skip>
     <impsort-maven-plugin.goal>sort</impsort-maven-plugin.goal>
@@ -120,7 +121,7 @@
         <executions>
           <execution>
             <goals>
-              <goal>check</goal>
+              <goal>${dependency-check-maven.goal}</goal>
             </goals>
             <phase>package</phase>
           </execution>
@@ -312,6 +313,20 @@
         <impsort-maven-plugin.skip>true</impsort-maven-plugin.skip>
         <quarkus-maven-plugin.skip>true</quarkus-maven-plugin.skip>
         <skipTests>true</skipTests>
+      </properties>
+    </profile>
+    <profile>
+      <id>ci-populate-cache</id>
+      <activation>
+        <property>
+          <name>ci-populate-cache</name>
+        </property>
+      </activation>
+      <properties>
+        <dependency-check-maven.goal>update-only</dependency-check-maven.goal>
+        <dependency-check-maven.skip>false</dependency-check-maven.skip>
+        <formatter-maven-plugin.skip>true</formatter-maven-plugin.skip>
+        <impsort-maven-plugin.skip>true</impsort-maven-plugin.skip>
       </properties>
     </profile>
     <profile>
