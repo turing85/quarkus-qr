@@ -2,9 +2,11 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
+
   <groupId>de.turing85</groupId>
   <artifactId>qr-code-generator</artifactId>
   <version>1.0.0-SNAPSHOT</version>
+
   <properties>
     <!-- Plugin versions -->
     <compiler-plugin.version>3.11.0</compiler-plugin.version>
@@ -182,6 +184,10 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-container-image-docker</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.jboss.logmanager</groupId>
       <artifactId>log4j2-jboss-logmanager</artifactId>
     </dependency>
@@ -190,16 +196,13 @@
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-config-yaml</artifactId>
     </dependency>
-    <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-container-image-docker</artifactId>
-    </dependency>
 
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-resteasy-reactive</artifactId>
     </dependency>
 
+    <!-- QR Code image generation -->
     <dependency>
       <groupId>com.google.zxing</groupId>
       <artifactId>core</artifactId>
@@ -215,14 +218,15 @@
       <artifactId>quarkus-awt</artifactId>
     </dependency>
 
+    <!-- Test dependencies -->
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-junit5</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>io.rest-assured</groupId>
-      <artifactId>rest-assured</artifactId>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-jacoco</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -232,13 +236,28 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-jacoco</artifactId>
+      <groupId>io.rest-assured</groupId>
+      <artifactId>rest-assured</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
 
   <profiles>
+    <profile>
+      <id>build-container-image</id>
+      <activation>
+        <property>
+          <name>build-container-image</name>
+        </property>
+      </activation>
+      <properties>
+        <quarkus.container-image.build>true</quarkus.container-image.build>
+        <quarkus.container-image.group>${project.groupId}</quarkus.container-image.group>
+        <quarkus.container-image.name>${project.artifactId}</quarkus.container-image.name>
+        <quarkus.container-image.tag>latest</quarkus.container-image.tag>
+        <quarkus.docker.dockerfile-jvm-path>src/main/container/Containerfile.temurin</quarkus.docker.dockerfile-jvm-path>
+      </properties>
+    </profile>
     <profile>
       <id>ci</id>
       <activation>
@@ -250,7 +269,6 @@
         <formatter-maven-plugin.goal>validate</formatter-maven-plugin.goal>
       </properties>
     </profile>
-
     <profile>
       <id>ci-owasp</id>
       <activation>
@@ -264,7 +282,6 @@
         <formatter-maven-plugin.skip>true</formatter-maven-plugin.skip>
       </properties>
     </profile>
-
     <profile>
       <id>native</id>
       <activation>
@@ -284,22 +301,6 @@
       </properties>
     </profile>
     <profile>
-      <id>build-container-image</id>
-      <activation>
-        <property>
-          <name>build-container-image</name>
-        </property>
-      </activation>
-      <properties>
-        <quarkus.container-image.build>true</quarkus.container-image.build>
-        <quarkus.container-image.group>${project.groupId}</quarkus.container-image.group>
-        <quarkus.container-image.name>${project.artifactId}</quarkus.container-image.name>
-        <quarkus.container-image.tag>latest</quarkus.container-image.tag>
-        <quarkus.docker.dockerfile-jvm-path>src/main/container/Containerfile.temurin</quarkus.docker.dockerfile-jvm-path>
-      </properties>
-    </profile>
-
-    <profile>
       <id>no-format</id>
       <activation>
         <property>
@@ -310,7 +311,6 @@
         <formatter-maven-plugin.skip>true</formatter-maven-plugin.skip>
       </properties>
     </profile>
-
     <profile>
       <id>owasp</id>
       <activation>
