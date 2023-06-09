@@ -24,7 +24,9 @@ runs:
           --define skipFormat \
           verify \
           quarkus:go-offline \
-          de.qaware.maven:go-offline-maven-plugin:resolve-dependencies \
+          de.qaware.maven:go-offline-maven-plugin:resolve-dependencies
+        mvn \
+          --define ci-owasp \
           dependency-check:update-only
 
     - name: Cancel Build
