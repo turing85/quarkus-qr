@@ -21,7 +21,7 @@ runs:
       run: |
         mvn \
           --batch-mode \
-          --define ci-owasp \
+          --define skipFormat \
           verify \
           quarkus:go-offline \
           de.qaware.maven:go-offline-maven-plugin:resolve-dependencies \
