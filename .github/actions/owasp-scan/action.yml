@@ -44,7 +44,6 @@ runs:
         mvn \
           --batch-mode \
           --define ci-owasp \
-          --define skipTests \
           package
 
     - name: Upload OWASP Scan Report

@@ -18,13 +18,13 @@
     <surefire-plugin.version>3.1.2</surefire-plugin.version>
 
     <!-- Project setup -->
-    <maven.compiler.release>17</maven.compiler.release>
     <dependency-check-maven.skip>true</dependency-check-maven.skip>
     <dependency-check-maven.formats>html,junit</dependency-check-maven.formats>
     <formatter-maven-plugin.goal>format</formatter-maven-plugin.goal>
     <formatter-maven-plugin.skip>false</formatter-maven-plugin.skip>
     <impsort-maven-plugin.goal>sort</impsort-maven-plugin.goal>
     <impsort-maven-plugin.skip>false</impsort-maven-plugin.skip>
+    <maven.compiler.release>17</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <skipITs>false</skipITs>
@@ -35,6 +35,7 @@
     <quarkus.platform.version>3.1.1.Final</quarkus.platform.version>
 
     <!-- Dependency versions -->
+    <quarkus-maven-plugin.skip>false</quarkus-maven-plugin.skip>
     <zxing.version>3.5.1</zxing.version>
   </properties>
 
@@ -83,7 +84,9 @@
         <groupId>${quarkus.platform.group-id}</groupId>
         <artifactId>quarkus-maven-plugin</artifactId>
         <version>${quarkus.platform.version}</version>
-        <extensions>true</extensions>
+        <configuration>
+          <skip>${quarkus-maven-plugin.skip}</skip>
+        </configuration>
         <executions>
           <execution>
             <goals>
@@ -93,6 +96,7 @@
             </goals>
           </execution>
         </executions>
+        <extensions>true</extensions>
       </plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -302,10 +306,12 @@
         </property>
       </activation>
       <properties>
-        <dependency-check-maven.skip>false</dependency-check-maven.skip>
         <dependency-check-maven.formats>junit</dependency-check-maven.formats>
+        <dependency-check-maven.skip>false</dependency-check-maven.skip>
         <formatter-maven-plugin.skip>true</formatter-maven-plugin.skip>
         <impsort-maven-plugin.skip>true</impsort-maven-plugin.skip>
+        <quarkus-maven-plugin.skip>true</quarkus-maven-plugin.skip>
+        <skipTests>true</skipTests>
       </properties>
     </profile>
     <profile>
@@ -327,18 +333,6 @@
       </properties>
     </profile>
     <profile>
-      <id>no-format</id>
-      <activation>
-        <property>
-          <name>no-format</name>
-        </property>
-      </activation>
-      <properties>
-        <formatter-maven-plugin.skip>true</formatter-maven-plugin.skip>
-        <impsort-maven-plugin.skip>true</impsort-maven-plugin.skip>
-      </properties>
-    </profile>
-    <profile>
       <id>owasp</id>
       <activation>
         <property>
@@ -347,6 +341,18 @@
       </activation>
       <properties>
         <dependency-check-maven.skip>false</dependency-check-maven.skip>
+      </properties>
+    </profile>
+    <profile>
+      <id>skipFormat</id>
+      <activation>
+        <property>
+          <name>skipFormat</name>
+        </property>
+      </activation>
+      <properties>
+        <formatter-maven-plugin.skip>true</formatter-maven-plugin.skip>
+        <impsort-maven-plugin.skip>true</impsort-maven-plugin.skip>
       </properties>
     </profile>
   </profiles>
