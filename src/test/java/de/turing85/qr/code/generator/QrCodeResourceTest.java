@@ -1,5 +1,13 @@
 package de.turing85.qr.code.generator;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.Map;
+
+import javax.imageio.ImageIO;
+
+import jakarta.ws.rs.core.Response;
+
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.MultiFormatReader;
 import com.google.zxing.NotFoundException;
@@ -7,15 +15,10 @@ import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
-import jakarta.ws.rs.core.Response;
 import org.junit.jupiter.api.Test;
 
-import javax.imageio.ImageIO;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.util.Map;
-
 import static com.google.common.truth.Truth.assertThat;
+
 import static io.restassured.RestAssured.when;
 
 @QuarkusTest

@@ -11,9 +11,10 @@
     <!-- Plugin versions -->
     <compiler-plugin.version>3.11.0</compiler-plugin.version>
     <dependency-check-maven.version>8.2.1</dependency-check-maven.version>
+    <formatter-maven-plugin.version>2.23.0</formatter-maven-plugin.version>
+    <impsort-maven-plugin.version>1.9.0</impsort-maven-plugin.version>
     <jacoco-maven-plugin.version>0.8.10</jacoco-maven-plugin.version>
     <lombok.version>1.18.28</lombok.version>
-    <formatter-maven-plugin.version>2.23.0</formatter-maven-plugin.version>
     <surefire-plugin.version>3.1.2</surefire-plugin.version>
 
     <!-- Project setup -->
@@ -22,6 +23,8 @@
     <dependency-check-maven.formats>html,junit</dependency-check-maven.formats>
     <formatter-maven-plugin.goal>format</formatter-maven-plugin.goal>
     <formatter-maven-plugin.skip>false</formatter-maven-plugin.skip>
+    <impsort-maven-plugin.goal>sort</impsort-maven-plugin.goal>
+    <impsort-maven-plugin.skip>false</impsort-maven-plugin.skip>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <skipITs>false</skipITs>
@@ -50,6 +53,27 @@
           <execution>
             <goals>
               <goal>${formatter-maven-plugin.goal}</goal>
+            </goals>
+            <phase>validate</phase>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>net.revelc.code</groupId>
+        <artifactId>impsort-maven-plugin</artifactId>
+        <version>${impsort-maven-plugin.version}</version>
+        <configuration>
+          <groups>java.,javax.,jakarta.,*</groups>
+          <lineEnding>LF</lineEnding>
+          <removeUnused>true</removeUnused>
+          <skip>${impsort-maven-plugin.skip}</skip>
+          <staticAfter>true</staticAfter>
+          <staticGroups>java,com.,de.,io.,org.,*</staticGroups>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>${impsort-maven-plugin.goal}</goal>
             </goals>
             <phase>validate</phase>
           </execution>
@@ -267,6 +291,7 @@
       </activation>
       <properties>
         <formatter-maven-plugin.goal>validate</formatter-maven-plugin.goal>
+        <impsort-maven-plugin.goal>check</impsort-maven-plugin.goal>
       </properties>
     </profile>
     <profile>
@@ -280,6 +305,7 @@
         <dependency-check-maven.skip>false</dependency-check-maven.skip>
         <dependency-check-maven.formats>junit</dependency-check-maven.formats>
         <formatter-maven-plugin.skip>true</formatter-maven-plugin.skip>
+        <impsort-maven-plugin.skip>true</impsort-maven-plugin.skip>
       </properties>
     </profile>
     <profile>
@@ -309,6 +335,7 @@
       </activation>
       <properties>
         <formatter-maven-plugin.skip>true</formatter-maven-plugin.skip>
+        <impsort-maven-plugin.skip>true</impsort-maven-plugin.skip>
       </properties>
     </profile>
     <profile>
