@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 
 import jakarta.ws.rs.core.Response;
 
+import com.google.common.truth.Truth;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.MultiFormatReader;
 import com.google.zxing.NotFoundException;
@@ -15,11 +16,8 @@ import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
+import io.restassured.RestAssured;
 import org.junit.jupiter.api.Test;
-
-import static com.google.common.truth.Truth.assertThat;
-
-import static io.restassured.RestAssured.when;
 
 @QuarkusTest
 @TestHTTPEndpoint(QrCodeResource.class)
@@ -33,7 +31,8 @@ class QrCodeResourceTest {
 
     // WHEN
     // @formatter:off
-    byte[] actual = when().get(expectedText)
+    byte[] actual = RestAssured
+        .when().get(expectedText)
 
     // THEN
         .then()
@@ -41,9 +40,9 @@ class QrCodeResourceTest {
           .contentType("image/png")
           .extract().body().asByteArray();
     // @formatter:on
-    assertThat(actual).isNotNull();
-    assertThat(actual).isNotEmpty();
-    assertThat(extractTextFromQrImage(actual)).isEqualTo(expectedText);
+    Truth.assertThat(actual).isNotNull();
+    Truth.assertThat(actual).isNotEmpty();
+    Truth.assertThat(extractTextFromQrImage(actual)).isEqualTo(expectedText);
   }
 
   private static String extractTextFromQrImage(byte[] actual)
