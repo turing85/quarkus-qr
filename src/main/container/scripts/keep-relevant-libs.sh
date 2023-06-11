@@ -6,8 +6,7 @@ function copy_lib64_to_pwd() {
    --no-dereference \
    --preserve=links \
    --recursive \
-   /usr/lib64/* \
-   .
+   /usr/lib64/* .
  }
 
 function files_in_pwd() {
@@ -43,6 +42,7 @@ function remove_unwanted_files_from_pwd() {
     files_to_keep < <(files_in_pwd_to_keep "${files[@]}")
   for file in "${files[@]}"
   do
+    file="${file%%[[:space:]]}"
     if [[ ! "${files_to_keep[*]}" =~ (^|.*[[:space:]]+)"${file}"([[:space:]]+.*|$).* ]]
     then
       rm -rf "${file}"
