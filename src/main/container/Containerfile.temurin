@@ -1,6 +1,6 @@
 # Tag: 17.0.6_10-jre-alpine
 FROM docker.io/eclipse-temurin@sha256:c26a727c4883eb73d32351be8bacb3e70f390c2c94f078dc493495ed93c60c2f
-ARG APP_DIR=/application
+ARG APP_DIR=/deployment
 ARG UID=1001
 
 USER root
