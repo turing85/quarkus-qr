@@ -4,8 +4,8 @@ USER root
 WORKDIR /libs_to_copy
 COPY \
   --chmod=700 \
-  src/main/container/scripts/keep-relevant-libs.sh /
-RUN /keep-relevant-libs.sh
+  src/main/container/scripts/keep-relevant-libs.sh /bin
+RUN keep-relevant-libs.sh
 
 # Tag: 2.0
 FROM quay.io/quarkus/quarkus-distroless-image@sha256:6b8bdd0419b4aad072ea93514bbc883213e67a87f827721f84ccf3bd692247a1
