@@ -1,5 +1,11 @@
 ARG PROVIDER_IMAGE
 FROM ${PROVIDER_IMAGE} AS provider
+USER root
+WORKDIR /libs_to_copy
+COPY \
+  --chmod=700 \
+  src/main/container/scripts/keep-relevant-libs.sh /
+RUN /keep-relevant-libs.sh
 
 # Tag: 2.0
 FROM quay.io/quarkus/quarkus-micro-image@sha256:81b5c49ecea667cc8e48e8e945bb1e6a674167f6c4299fe1f069f7f8e4f6097a
@@ -7,18 +13,12 @@ ARG APP_DIR=/application
 ARG UID=1001
 
 USER root
+COPY \
+  --from=provider \
+  /libs_to_copy \
+  /usr/lib64
+
 WORKDIR ${APP_DIR}
-
-COPY \
-  --from=provider \
-  /usr/lib64/libfreetype.so* /usr/lib64/
-COPY \
-  --from=provider \
-  /usr/lib64/libbz2.so* /usr/lib64/
-COPY \
-  --from=provider \
-  /usr/lib64/libpng16.so* /usr/lib64/
-
 COPY \
   --chmod=111 \
    target/*-runner ${APP_DIR}/application
