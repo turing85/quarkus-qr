@@ -70,7 +70,7 @@
           <removeUnused>true</removeUnused>
           <skip>${impsort-maven-plugin.skip}</skip>
           <staticAfter>true</staticAfter>
-          <staticGroups>java,com.,de.,io.,org.,*</staticGroups>
+          <staticGroups>java,javax.,jakarta.,*</staticGroups>
         </configuration>
         <executions>
           <execution>
