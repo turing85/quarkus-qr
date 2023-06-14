@@ -42,7 +42,7 @@ jobs:
 
     steps:
       - name: Publish Report
-        uses: turing85/publish-report@v1.0.8
+        uses: turing85/publish-report@v1.0.9
         with:
           checkout: true
           recreate-comment: true
@@ -192,7 +192,7 @@ jobs:
 
     steps:
       - name: Publish report (JVM Test)
-        uses: turing85/publish-report@v1.0.8
+        uses: turing85/publish-report@v1.0.9
         with:
           checkout: true
           download-artifact-name: test-report-jvm
@@ -210,7 +210,7 @@ jobs:
 
     steps:
       - name: Publish Report (Native Test)
-        uses: turing85/publish-report@v1.0.8
+        uses: turing85/publish-report@v1.0.9
         with:
           checkout: true
           download-artifact-name: test-report-native
