@@ -34,6 +34,7 @@
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
     <quarkus.platform.version>3.1.2.Final</quarkus.platform.version>
+    <quarkus-cucumber.version>1.0.0</quarkus-cucumber.version>
 
     <!-- Dependency versions -->
     <quarkus-maven-plugin.skip>false</quarkus-maven-plugin.skip>
@@ -267,6 +268,18 @@
     <dependency>
       <groupId>io.rest-assured</groupId>
       <artifactId>rest-assured</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkiverse.cucumber</groupId>
+      <artifactId>quarkus-cucumber</artifactId>
+      <version>${quarkus-cucumber.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.weld.se</groupId>
+      <artifactId>weld-se-shaded</artifactId>
+      <version>5.1.1.Final</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
