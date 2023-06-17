@@ -21,7 +21,7 @@ jobs:
         uses: turing85/publish-report@v1.0.9
         with:
           cancel-workflow-on-error: true
-          checkout: false
+          checkout: true
           download-artifact-name: ${{ inputs.artifact-name }}
           report-name: ${{ inputs.name }})
           report-only-summary: true

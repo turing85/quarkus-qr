@@ -177,9 +177,7 @@ jobs:
     uses: turing85/quarkus-qr/.github/workflows/pr-report.yml@feature/test-pipeline-calls
     with:
       artifact-name: test-report-jvm
-      report-name: JVM Test
-      report-only-summary: true
-      report-path: '**/target/**/TEST*.xml'
+      name: JVM Test
 
   test-report-native:
     name: Test Report (Native)
@@ -191,9 +189,7 @@ jobs:
     uses: turing85/quarkus-qr/.github/workflows/pr-report.yml@feature/test-pipeline-calls
     with:
       artifact-name: test-report-native
-      report-name: Native Test
-      report-only-summary: true
-      report-path: '**/target/**/TEST*.xml'
+      name: Native Test
 
   owasp:
     name: OWASP Scan
