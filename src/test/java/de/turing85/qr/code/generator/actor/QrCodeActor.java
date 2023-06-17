@@ -9,6 +9,7 @@ import java.util.Optional;
 
 import javax.imageio.ImageIO;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.core.Response;
 
 import com.google.common.truth.Truth;
@@ -21,6 +22,7 @@ import io.restassured.response.ValidatableResponse;
 
 import static io.restassured.RestAssured.when;
 
+@ApplicationScoped
 public class QrCodeActor {
   private static final MultiFormatReader MULTI_FORMAT_READER = new MultiFormatReader();
 
