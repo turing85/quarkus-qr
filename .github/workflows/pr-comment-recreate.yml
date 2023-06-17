@@ -1,0 +1,14 @@
+on:
+  workflow_call:
+
+jobs:
+  recreate-comment:
+    name: Recreate Comment
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Publish Report
+        uses: turing85/publish-report@v1.0.9
+        with:
+          checkout: true
+          recreate-comment: true

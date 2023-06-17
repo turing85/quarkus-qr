@@ -1,0 +1,28 @@
+on:
+  workflow_call:
+    inputs:
+      name:
+        required: true
+        type: string
+      artifact-name:
+        required: true
+        type: string
+
+permissions:
+  actions: write
+  checks: write
+  pull-requests: write
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish report (${{ inputs.name }})
+        uses: turing85/publish-report@v1.0.9
+        with:
+          cancel-workflow-on-error: true
+          checkout: false
+          download-artifact-name: ${{ inputs.artifact-name }}
+          report-name: ${{ inputs.name }})
+          report-only-summary: true
+          report-path: '**/target/**/TEST*.xml'

@@ -38,14 +38,7 @@ permissions:
 jobs:
   recreate-comment:
     name: Recreate Comment
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Publish Report
-        uses: turing85/publish-report@v1.0.9
-        with:
-          checkout: true
-          recreate-comment: true
+    uses: turing85/quarkus-qr/.github/workflows/pr-comment-recreate.yml@feature/test-pipeline-calls
 
   populate-cache:
     name: Populate Cache
@@ -176,41 +169,31 @@ jobs:
 
   test-report-jvm:
     name: Test Report (JVM)
-    runs-on: ubuntu-latest
 
     needs:
       - recreate-comment
       - build-and-test-jvm
 
-    steps:
-      - name: Publish report (JVM Test)
-        uses: turing85/publish-report@v1.0.9
-        with:
-          cancel-workflow-on-error: true
-          checkout: true
-          download-artifact-name: test-report-jvm
-          report-name: JVM Test
-          report-only-summary: true
-          report-path: '**/target/**/TEST*.xml'
+    uses: turing85/quarkus-qr/.github/workflows/pr-report.yml@feature/test-pipeline-calls
+    with:
+      artifact-name: test-report-jvm
+      report-name: JVM Test
+      report-only-summary: true
+      report-path: '**/target/**/TEST*.xml'
 
   test-report-native:
     name: Test Report (Native)
-    runs-on: ubuntu-latest
 
     needs:
       - recreate-comment
       - build-and-test-native
 
-    steps:
-      - name: Publish Report (Native Test)
-        uses: turing85/publish-report@v1.0.9
-        with:
-          cancel-workflow-on-error: true
-          checkout: true
-          download-artifact-name: test-report-native
-          report-name: Native Test
-          report-only-summary: true
-          report-path: '**/target/**/TEST*.xml'
+    uses: turing85/quarkus-qr/.github/workflows/pr-report.yml@feature/test-pipeline-calls
+    with:
+      artifact-name: test-report-native
+      report-name: Native Test
+      report-only-summary: true
+      report-path: '**/target/**/TEST*.xml'
 
   owasp:
     name: OWASP Scan
