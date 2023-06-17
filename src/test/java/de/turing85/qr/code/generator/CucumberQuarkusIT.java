@@ -7,7 +7,7 @@ import io.quarkiverse.cucumber.CucumberQuarkusTest;
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
 
-public abstract class CucumberQuarkusIntegrationTestParent extends CucumberQuarkusTest {
+public abstract class CucumberQuarkusIT extends CucumberQuarkusTest {
   static {
     // @formatter:off
     Weld weld = new Weld()
