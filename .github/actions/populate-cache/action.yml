@@ -35,7 +35,7 @@ runs:
       if: ${{ steps.setup.outputs.cache-hit != 'true' }}
       shell: sh
       run: |
-        mvn \
+        ./mvnw \
           --batch-mode \
           --color always \
           --define ci-populate-cache \

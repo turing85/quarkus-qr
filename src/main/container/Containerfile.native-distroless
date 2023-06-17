@@ -1,25 +1,14 @@
-ARG PROVIDER_IMAGE="quay.io/quarkus/ubi-quarkus-mandrel-builder-image:22.3-java17@sha256:88b1d79140d2cc79e1e7808efdd72e930ee7ae07d56a7b9ad5e2152261488ef6"
 ARG DISTROLESS_IMAGE="quay.io/quarkus/quarkus-distroless-image:2.0@sha256:28d0f7ad578426ea434c09394eef7d46e3b7b106ded9438477224367995e244a"
-
-FROM ${PROVIDER_IMAGE} AS provider
-USER root
-WORKDIR /libs_to_copy
-COPY \
-  --chmod=700 \
-  src/main/container/scripts/move-relevant-libs-to-pwd.sh /bin/
-RUN move-relevant-libs-to-pwd.sh
 
 FROM ${DISTROLESS_IMAGE} as runner
 ARG APP_DIR=/deployment
 ARG UID=1001
 
 USER root
+WORKDIR ${APP_DIR}
 COPY \
   --chmod=444 \
-  --from=provider \
-  /libs_to_copy/ /lib/
-
-WORKDIR ${APP_DIR}
+  target/*.so /lib/
 COPY \
   --chmod=111 \
    target/*-runner ${APP_DIR}/application

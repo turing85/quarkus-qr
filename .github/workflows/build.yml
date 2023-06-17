@@ -88,7 +88,7 @@ jobs:
 
       - name: Build and Test
         run: |
-          mvn \
+          ./mvnw \
             --batch-mode \
             --color always \
             --define build-container-image \
@@ -160,9 +160,14 @@ jobs:
           java-version: ${{ env.JAVA_VERSION }}
           version: ${{ env.GRAALVM_VERSION }}
 
+      # TODO: Remove if bug in quarkus is fixed
+      - name: Pre-pull builder-image
+        run: |
+          docker pull quay.io/quarkus/ubi-quarkus-mandrel-builder-image:23.0-java17@sha256:2016d11266d8a8beb3fa76b0d12cc4399e99821afaeac32e2273d3cc1b2bda0b
+
       - name: Build and Test
         run: |
-          mvn \
+          ./mvnw \
             --batch-mode \
             --color always \
             --define build-container-image \
@@ -176,7 +181,9 @@ jobs:
         with:
           if-no-files-found: error
           name: executable
-          path: 'target/*-runner'
+          path: |
+            target/*-runner
+            target/*.so
           retention-days: 2
 
       - name: Upload Test Report
