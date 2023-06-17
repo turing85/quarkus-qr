@@ -117,7 +117,7 @@ jobs:
         with:
           if-no-files-found: error
           name: fast-jar
-          path: '**/target/quarkus-app/**/*'
+          path: 'target/quarkus-app'
           retention-days: 2
 
       - name: Upload Test Report
@@ -166,7 +166,7 @@ jobs:
         with:
           if-no-files-found: error
           name: executable
-          path: '**/target/*-runner'
+          path: 'target/*-runner'
           retention-days: 2
 
       - name: Upload Test Report
