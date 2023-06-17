@@ -2,5 +2,6 @@
 !src/main/container/scripts/
 !target/lib/
 !target/quarkus-app/
+!target/*.so
 !target/*-runner
 !target/*-runner.jar

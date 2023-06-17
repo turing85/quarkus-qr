@@ -351,9 +351,8 @@
       </activation>
       <properties>
         <quarkus.container-image.additional-tags>native</quarkus.container-image.additional-tags>
-        <quarkus.docker.build-args.PROVIDER_IMAGE>${quarkus.native.builder-image}</quarkus.docker.build-args.PROVIDER_IMAGE>
         <quarkus.docker.dockerfile-native-path>src/main/container/Containerfile.native-distroless</quarkus.docker.dockerfile-native-path>
-        <quarkus.native.builder-image>quay.io/quarkus/ubi-quarkus-mandrel-builder-image:22.3-java17@sha256:88b1d79140d2cc79e1e7808efdd72e930ee7ae07d56a7b9ad5e2152261488ef6</quarkus.native.builder-image>
+        <quarkus.native.builder-image>quay.io/quarkus/ubi-quarkus-mandrel-builder-image:23.0-java17@sha256:2016d11266d8a8beb3fa76b0d12cc4399e99821afaeac32e2273d3cc1b2bda0b</quarkus.native.builder-image>
         <quarkus.native.container-build>true</quarkus.native.container-build>
         <quarkus.package.type>native</quarkus.package.type>
         <skipITs>false</skipITs>

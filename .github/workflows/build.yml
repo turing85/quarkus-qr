@@ -129,10 +129,6 @@ jobs:
           path: '**/target/**/TEST*.xml'
           retention-days: 2
 
-      - name: Cancel Build
-        if: ${{ failure() }}
-        uses: andymckay/cancel-action@0.3
-
   build-and-test-native:
     name: Build and Test (Native)
     runs-on: ubuntu-latest
@@ -166,7 +162,9 @@ jobs:
         with:
           if-no-files-found: error
           name: executable
-          path: '**/target/*-runner'
+          path: |
+            '**/target/*-runner'
+            '**/target/*.so'
           retention-days: 2
 
       - name: Upload Test Report
@@ -177,10 +175,6 @@ jobs:
           name: test-report-native
           path: '**/target/**/TEST*.xml'
           retention-days: 2
-
-      - name: Cancel Build
-        if: ${{ failure() }}
-        uses: andymckay/cancel-action@0.3
 
   test-report-jvm:
     name: Test Report (JVM)
@@ -194,6 +188,7 @@ jobs:
       - name: Publish report (JVM Test)
         uses: turing85/publish-report@v1.0.9
         with:
+          cancel-workflow-on-error: true
           checkout: true
           download-artifact-name: test-report-jvm
           report-name: JVM Test
@@ -212,6 +207,7 @@ jobs:
       - name: Publish Report (Native Test)
         uses: turing85/publish-report@v1.0.9
         with:
+          cancel-workflow-on-error: true
           checkout: true
           download-artifact-name: test-report-native
           report-name: Native Test
