@@ -2,6 +2,8 @@ package de.turing85.qr.code.generator;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -29,6 +31,7 @@ public class QrCodeResource {
     log.info("Generating qr-code for text: \"{}\"", data);
     //@formatter:off
     return Uni.createFrom().item(data)
+        .map(encodedData -> URLDecoder.decode(encodedData, StandardCharsets.UTF_8))
         .onItem().transform(QrCodeResource::textToQrCode);
     //@formatter:on
   }

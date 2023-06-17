@@ -2,8 +2,6 @@ package de.turing85.qr.code.generator.actor;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Optional;
 
@@ -26,13 +24,13 @@ import static io.restassured.RestAssured.when;
 public class QrCodeActor {
   private static final MultiFormatReader MULTI_FORMAT_READER = new MultiFormatReader();
 
-  private String lastUrlencodedText;
+  private String lastText;
   private ValidatableResponse lastResponse;
 
   public void getQrCodeFor(String text) {
-    lastUrlencodedText = URLEncoder.encode(text, StandardCharsets.UTF_8);
+    lastText = text;
     // @formatter:off
-    lastResponse = when().get("qr-code/%s".formatted(lastUrlencodedText))
+    lastResponse = when().get("qr-code/%s".formatted(text))
         .then();
     // @formatter:on
   }
@@ -41,14 +39,15 @@ public class QrCodeActor {
     try {
       // @formatter:off
       byte[] actual = Optional.ofNullable(lastResponse)
-          .orElseThrow(() -> new IllegalStateException("please call \"getQrCodeFor(String)\" first"))
+          .orElseThrow(() ->
+              new IllegalStateException("please call \"getQrCodeFor(String)\" first"))
           .statusCode(Response.Status.OK.getStatusCode())
           .contentType("image/png")
           .extract().body().asByteArray();
       // @formatter:on
       Truth.assertThat(actual).isNotNull();
       Truth.assertThat(actual).isNotEmpty();
-      Truth.assertThat(extractTextFromQrImage(actual)).isEqualTo(lastUrlencodedText);
+      Truth.assertThat(extractTextFromQrImage(actual)).isEqualTo(lastText);
     } finally {
       clearState();
     }
@@ -56,13 +55,17 @@ public class QrCodeActor {
 
   private static String extractTextFromQrImage(byte[] actual)
       throws IOException, NotFoundException {
-    BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(
-        new BufferedImageLuminanceSource(ImageIO.read(new ByteArrayInputStream(actual)))));
+    // @formatter:off
+    BinaryBitmap binaryBitmap = new BinaryBitmap(
+        new HybridBinarizer(
+            new BufferedImageLuminanceSource(
+                ImageIO.read(new ByteArrayInputStream(actual)))));
+    // @formatter:on
     return MULTI_FORMAT_READER.decode(binaryBitmap, Map.of()).getText();
   }
 
   private void clearState() {
     lastResponse = null;
-    lastUrlencodedText = null;
+    lastText = null;
   }
 }
