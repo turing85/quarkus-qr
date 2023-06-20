@@ -21,6 +21,7 @@ runs:
       run: |
         mvn \
           --batch-mode \
+          --color always \
           --define ci-populate-cache \
           verify \
           quarkus:go-offline \

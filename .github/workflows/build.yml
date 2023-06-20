@@ -80,6 +80,7 @@ jobs:
         run: |
           mvn \
             --batch-mode \
+            --color always \
             --define build-container-image \
             --define ci \
             verify
@@ -151,6 +152,7 @@ jobs:
         run: |
           mvn \
             --batch-mode \
+            --color always \
             --define build-container-image \
             --define ci \
             --define native \

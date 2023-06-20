@@ -10,6 +10,6 @@ import org.jboss.weld.junit5.auto.EnableAutoWeld;
     glue = {"de.turing85.qr.code.generator.steps"})
 @QuarkusIntegrationTest
 @EnableAutoWeld
-@AddPackages(value = {QrCodeResourceIT.class})
+@AddPackages(QrCodeResourceIT.class)
 public class QrCodeResourceIT extends CucumberQuarkusTest {
 }

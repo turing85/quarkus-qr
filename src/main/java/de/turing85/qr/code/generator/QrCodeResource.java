@@ -7,9 +7,9 @@ import java.nio.charset.StandardCharsets;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.ProcessingException;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -25,9 +25,8 @@ public class QrCodeResource {
   private static final QRCodeWriter barcodeWriter = new QRCodeWriter();
 
   @GET
-  @Path("{data}")
   @Produces("image/png")
-  public Uni<byte[]> getBarcode(@PathParam("data") String data) {
+  public Uni<byte[]> getBarcode(@QueryParam("data") String data) {
     log.info("Generating qr-code for text: \"{}\"", data);
     //@formatter:off
     return Uni.createFrom().item(data)
