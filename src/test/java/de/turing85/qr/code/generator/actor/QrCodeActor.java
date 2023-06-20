@@ -18,19 +18,20 @@ import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
 import io.restassured.response.ValidatableResponse;
 
-import static io.restassured.RestAssured.when;
+import static io.restassured.RestAssured.given;
 
 @ApplicationScoped
 public class QrCodeActor {
   private static final MultiFormatReader MULTI_FORMAT_READER = new MultiFormatReader();
 
-  private String lastText;
+  private String lastData;
   private ValidatableResponse lastResponse;
 
-  public void getQrCodeFor(String text) {
-    lastText = text;
+  public void getQrCodeFor(String data) {
+    lastData = data;
     // @formatter:off
-    lastResponse = when().get("qr-code/%s".formatted(text))
+    lastResponse = given().queryParam("data", data)
+        .when().get("qr-code")
         .then();
     // @formatter:on
   }
@@ -47,7 +48,7 @@ public class QrCodeActor {
       // @formatter:on
       Truth.assertThat(actual).isNotNull();
       Truth.assertThat(actual).isNotEmpty();
-      Truth.assertThat(extractTextFromQrImage(actual)).isEqualTo(lastText);
+      Truth.assertThat(extractTextFromQrImage(actual)).isEqualTo(lastData);
     } finally {
       clearState();
     }
@@ -66,6 +67,6 @@ public class QrCodeActor {
 
   private void clearState() {
     lastResponse = null;
-    lastText = null;
+    lastData = null;
   }
 }

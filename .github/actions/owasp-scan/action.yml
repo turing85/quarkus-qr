@@ -43,6 +43,7 @@ runs:
       run: |
         mvn \
           --batch-mode \
+          --color always \
           --define ci-owasp \
           package
 
