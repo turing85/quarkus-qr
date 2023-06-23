@@ -187,6 +187,7 @@ jobs:
     steps:
       - name: Publish report (JVM Test)
         uses: turing85/publish-report@v1.0.9
+        if: ${{ always() }}
         with:
           cancel-workflow-on-error: true
           checkout: true
@@ -206,6 +207,7 @@ jobs:
     steps:
       - name: Publish Report (Native Test)
         uses: turing85/publish-report@v1.0.9
+        if: ${{ always() }}
         with:
           cancel-workflow-on-error: true
           checkout: true
