@@ -3,7 +3,6 @@ package de.turing85.qr.code.generator.step;
 import java.io.IOException;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 
 import com.google.zxing.NotFoundException;
 import de.turing85.qr.code.generator.actor.QrCodeActor;
@@ -12,7 +11,7 @@ import io.cucumber.java.en.When;
 import lombok.RequiredArgsConstructor;
 
 @ApplicationScoped
-@RequiredArgsConstructor(onConstructor_ = {@Inject})
+@RequiredArgsConstructor
 public class QrCodeStep {
   private final QrCodeActor actor;
 
