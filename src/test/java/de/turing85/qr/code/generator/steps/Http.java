@@ -17,12 +17,12 @@ public class Http {
   private final QrCodeActor actor;
 
   @When("I get {string} as QR-code")
-  public void whenIAccessEndpoint(String text) {
-    actor.getQrCodeFor(text);
+  public void whenIAccessEndpoint(String data) {
+    actor.getQrCodeFor(data);
   }
 
-  @Then("I expect to get the correct QR code")
-  public void thenIExpectToGetTheCorrectQrCode() throws NotFoundException, IOException {
-    actor.qrCodeIsAsExpected();
+  @Then("I expect the correct QR code to decode to {string}")
+  public void thenIExpectToGetTheCorrectQrCode(String data) throws NotFoundException, IOException {
+    actor.qrCodeDecodesTo(data);
   }
 }

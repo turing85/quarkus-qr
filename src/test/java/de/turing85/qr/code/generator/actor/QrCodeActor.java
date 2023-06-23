@@ -24,11 +24,9 @@ import static io.restassured.RestAssured.given;
 public class QrCodeActor {
   private static final MultiFormatReader MULTI_FORMAT_READER = new MultiFormatReader();
 
-  private String lastData;
   private ValidatableResponse lastResponse;
 
   public void getQrCodeFor(String data) {
-    lastData = data;
     // @formatter:off
     lastResponse = given().queryParam("data", data)
         .when().get("qr-code")
@@ -36,7 +34,7 @@ public class QrCodeActor {
     // @formatter:on
   }
 
-  public void qrCodeIsAsExpected() throws IOException, NotFoundException {
+  public void qrCodeDecodesTo(String expected) throws IOException, NotFoundException {
     try {
       // @formatter:off
       byte[] actual = Optional.ofNullable(lastResponse)
@@ -48,7 +46,7 @@ public class QrCodeActor {
       // @formatter:on
       Truth.assertThat(actual).isNotNull();
       Truth.assertThat(actual).isNotEmpty();
-      Truth.assertThat(extractTextFromQrImage(actual)).isEqualTo(lastData);
+      Truth.assertThat(extractTextFromQrImage(actual)).isEqualTo(expected);
     } finally {
       clearState();
     }
@@ -67,6 +65,5 @@ public class QrCodeActor {
 
   private void clearState() {
     lastResponse = null;
-    lastData = null;
   }
 }
