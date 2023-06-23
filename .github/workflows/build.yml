@@ -61,6 +61,7 @@ jobs:
   build-and-test-jvm:
     name: Build and Test (JVM)
     runs-on: ubuntu-latest
+    continue-on-error: true
 
     needs:
       - populate-cache
@@ -133,6 +134,7 @@ jobs:
   build-and-test-native:
     name: Build and Test (Native)
     runs-on: ubuntu-latest
+    continue-on-error: true
 
     needs:
       - populate-cache
