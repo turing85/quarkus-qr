@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 public class Http {
   private final QrCodeActor actor;
 
-  @When("I get {string} as QR-code")
+  @When("I get {string} as QR Code")
   public void whenIAccessEndpoint(String data) {
     actor.getQrCodeFor(data);
   }
