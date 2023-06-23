@@ -1,0 +1,41 @@
+ARG PROVIDER_IMAGE="quay.io/quarkus/ubi-quarkus-mandrel-builder-image:22.3-java17@sha256:88b1d79140d2cc79e1e7808efdd72e930ee7ae07d56a7b9ad5e2152261488ef6"
+ARG DISTROLESS_IMAGE="quay.io/quarkus/quarkus-distroless-image:2.0@sha256:28d0f7ad578426ea434c09394eef7d46e3b7b106ded9438477224367995e244a"
+
+FROM ${PROVIDER_IMAGE} AS provider
+ARG UPX_INSTALLATION_COMMAND="true `# noop, already installed in ubi-quarkus-mandrel-builder-image`"
+ARG UPX_COMPRESSION_MODE="--best"
+USER root
+WORKDIR /libs_to_copy
+COPY \
+  --chmod=700 \
+  src/main/container/scripts/move-relevant-libs-to-pwd.sh /bin
+RUN move-relevant-libs-to-pwd.sh
+
+WORKDIR /project
+COPY \
+  --chmod=700 \
+  target/*-runner /project/application
+RUN eval "${UPX_INSTALLATION_COMMAND}"
+RUN upx \
+  "${UPX_COMPRESSION_MODE}" \
+  -o application-compressed \
+  application
+
+FROM ${DISTROLESS_IMAGE} as runner
+ARG APP_DIR=/deployment
+ARG UID=1001
+
+USER root
+COPY \
+  --from=provider \
+  /libs_to_copy /lib
+
+WORKDIR ${APP_DIR}
+COPY \
+  --from=provider \
+  --chmod=111 \
+   /project/application-compressed ${APP_DIR}/application
+
+ENV LANGUAGE='en_US:en'
+USER ${UID}:${UID}
+ENTRYPOINT [ "./application" ]
