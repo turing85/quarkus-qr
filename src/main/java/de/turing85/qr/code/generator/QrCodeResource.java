@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.ProcessingException;
@@ -26,18 +29,18 @@ public class QrCodeResource {
 
   @GET
   @Produces("image/png")
-  public Uni<byte[]> getQrCode(@QueryParam("data") String data) {
-    log.info("Generating qr-code for text: \"{}\"", data);
+  public Uni<byte[]> getQrCode(@QueryParam("text") @Valid @NotNull @NotBlank String text) {
+    log.info("Generating qr-code for text: \"{}\"", text);
     //@formatter:off
-    return Uni.createFrom().item(data)
+    return Uni.createFrom().item(text)
         .map(encodedData -> URLDecoder.decode(encodedData, StandardCharsets.UTF_8))
         .onItem().transform(QrCodeResource::textToQrCode);
     //@formatter:on
   }
 
-  private static byte[] textToQrCode(String data) {
+  private static byte[] textToQrCode(String text) {
     try {
-      BitMatrix bitMatrix = barcodeWriter.encode(data, BarcodeFormat.QR_CODE, 200, 200);
+      BitMatrix bitMatrix = barcodeWriter.encode(text, BarcodeFormat.QR_CODE, 200, 200);
       ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
       MatrixToImageWriter.writeToStream(bitMatrix, "PNG", outputStream);
       return outputStream.toByteArray();

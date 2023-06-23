@@ -1,0 +1,46 @@
+package de.turing85.qr.code.generator.exceptionmapper;
+
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Path;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.ext.ExceptionMapper;
+import jakarta.ws.rs.ext.Provider;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Provider
+@SuppressWarnings("unused")
+public class ConstraintViolationExceptionMapper
+    implements ExceptionMapper<ConstraintViolationException> {
+
+  public static final String BODY_FORMAT = "Parameter \"%s\": %s";
+  public static final String UNNAMED_PROPERTY = "(unnamed)";
+
+  @Override
+  public Response toResponse(ConstraintViolationException exception) {
+    String message = exception.getConstraintViolations().stream()
+        .map(violation -> constructViolationDescription(
+            getPropertyNameFromPath(violation).orElse(UNNAMED_PROPERTY), violation.getMessage()))
+        .collect(Collectors.joining("\n"));
+    return Response.status(Response.Status.BAD_REQUEST).type(MediaType.APPLICATION_JSON_TYPE)
+        .entity(new ErrorResponse(message)).build();
+  }
+
+  private String constructViolationDescription(String propertyName, String message) {
+    return String.format(BODY_FORMAT, propertyName, message);
+  }
+
+  private Optional<String> getPropertyNameFromPath(ConstraintViolation<?> violation) {
+    String propertyName = null;
+    for (Path.Node node : violation.getPropertyPath()) {
+      propertyName = node.getName();
+    }
+    return Optional.ofNullable(propertyName);
+  }
+}

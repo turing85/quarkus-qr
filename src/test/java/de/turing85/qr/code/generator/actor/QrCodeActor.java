@@ -16,28 +16,33 @@ import com.google.zxing.MultiFormatReader;
 import com.google.zxing.NotFoundException;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
+import de.turing85.qr.code.generator.exceptionmapper.ErrorResponse;
 import io.restassured.response.ValidatableResponse;
+import org.jboss.resteasy.reactive.RestResponse;
 
 import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.when;
 
 @ApplicationScoped
 public class QrCodeActor {
   private static final MultiFormatReader MULTI_FORMAT_READER = new MultiFormatReader();
 
-  private ValidatableResponse lastResponse;
+  private String text;
+  private ValidatableResponse response;
 
-  public void getQrCodeFor(String data) {
+  public void getQrCodeFor(String text) {
+    this.text = text;
     // @formatter:off
-    lastResponse = given().queryParam("data", data)
+    response = given().queryParam("text", text)
         .when().get("qr-code")
         .then();
     // @formatter:on
   }
 
-  public void qrCodeDecodesTo(String expected) throws IOException, NotFoundException {
+  public void qrCodeDecodesToText() throws IOException, NotFoundException {
     try {
       // @formatter:off
-      byte[] actual = Optional.ofNullable(lastResponse)
+      byte[] actual = Optional.ofNullable(response)
           .orElseThrow(() ->
               new IllegalStateException("please call \"getQrCodeFor(String)\" first"))
           .statusCode(Response.Status.OK.getStatusCode())
@@ -46,7 +51,7 @@ public class QrCodeActor {
       // @formatter:on
       Truth.assertThat(actual).isNotNull();
       Truth.assertThat(actual).isNotEmpty();
-      Truth.assertThat(extractTextFromQrImage(actual)).isEqualTo(expected);
+      Truth.assertThat(extractTextFromQrImage(actual)).isEqualTo(text);
     } finally {
       clearState();
     }
@@ -64,6 +69,22 @@ public class QrCodeActor {
   }
 
   private void clearState() {
-    lastResponse = null;
+    response = null;
+    text = null;
+  }
+
+  public void getQrCodeForNoText() {
+    // @formatter:off
+    response = when().get("qr-code")
+        .then();
+    // @formatter:on
+  }
+
+  public void responseIsBadRequest() {
+    response.statusCode(RestResponse.Status.BAD_REQUEST.getStatusCode());
+    ErrorResponse errorResponse = response.extract().body().as(ErrorResponse.class);
+    Truth.assertThat(errorResponse.message()).isNotNull();
+    Truth.assertThat(errorResponse.message()).isNotEmpty();
+    clearState();
   }
 }
