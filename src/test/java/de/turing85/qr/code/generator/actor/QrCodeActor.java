@@ -18,7 +18,6 @@ import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
 import de.turing85.qr.code.generator.exceptionmapper.ErrorResponse;
 import io.restassured.response.ValidatableResponse;
-import org.jboss.resteasy.reactive.RestResponse;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
@@ -81,7 +80,7 @@ public class QrCodeActor {
   }
 
   public void responseIsBadRequest() {
-    response.statusCode(RestResponse.Status.BAD_REQUEST.getStatusCode());
+    response.statusCode(Response.Status.BAD_REQUEST.getStatusCode());
     ErrorResponse errorResponse = response.extract().body().as(ErrorResponse.class);
     Truth.assertThat(errorResponse.message()).isNotNull();
     Truth.assertThat(errorResponse.message()).isNotEmpty();
