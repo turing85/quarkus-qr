@@ -26,7 +26,7 @@ public class QrCodeResource {
 
   @GET
   @Produces("image/png")
-  public Uni<byte[]> getBarcode(@QueryParam("data") String data) {
+  public Uni<byte[]> getQrCode(@QueryParam("data") String data) {
     log.info("Generating qr-code for text: \"{}\"", data);
     //@formatter:off
     return Uni.createFrom().item(data)
