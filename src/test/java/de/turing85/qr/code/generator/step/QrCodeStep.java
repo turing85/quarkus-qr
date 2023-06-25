@@ -23,7 +23,7 @@ public class QrCodeStep {
 
   @Then("I expect the QR code to decode to that text")
   public void thenIExpectToGetTheCorrectQrCode() throws NotFoundException, IOException {
-    actor.qrCodeDecodesToText();
+    actor.qrCodeDecodesToExpectedText();
   }
 
   @When("I pass no text to generate a QR Code")

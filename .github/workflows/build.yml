@@ -167,8 +167,7 @@ jobs:
             --color always \
             --define build-container-image \
             --define ci \
-            --define native \
-            --define quarkus.docker.dockerfile-native-path=src/main/container/Containerfile.native-distroless-compressed \
+            --define native-compressed \
             verify
 
       - name: Upload executable
