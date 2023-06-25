@@ -6,7 +6,7 @@ USER root
 WORKDIR /libs_to_copy
 COPY \
   --chmod=700 \
-  src/main/container/scripts/move-relevant-libs-to-pwd.sh /bin
+  src/main/container/scripts/move-relevant-libs-to-pwd.sh /bin/
 RUN move-relevant-libs-to-pwd.sh
 
 FROM ${DISTROLESS_IMAGE} as runner
@@ -15,8 +15,9 @@ ARG UID=1001
 
 USER root
 COPY \
+  --chmod=444 \
   --from=provider \
-  /libs_to_copy /lib
+  /libs_to_copy/ /lib/
 
 WORKDIR ${APP_DIR}
 COPY \

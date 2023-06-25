@@ -27,11 +27,11 @@ import static io.restassured.RestAssured.when;
 public class QrCodeActor {
   private static final MultiFormatReader MULTI_FORMAT_READER = new MultiFormatReader();
 
-  private String text;
+  private String expectedText;
   private ValidatableResponse response;
 
   public void getQrCodeFor(String text) {
-    this.text = text;
+    expectedText = text;
     // @formatter:off
     response = given().queryParam("text", text)
         .when().get(QrCodeResource.PATH)
@@ -39,7 +39,7 @@ public class QrCodeActor {
     // @formatter:on
   }
 
-  public void qrCodeDecodesToText() throws IOException, NotFoundException {
+  public void qrCodeDecodesToExpectedText() throws IOException, NotFoundException {
     try {
       // @formatter:off
       byte[] actual = Optional.ofNullable(response)
@@ -51,7 +51,7 @@ public class QrCodeActor {
       // @formatter:on
       Truth.assertThat(actual).isNotNull();
       Truth.assertThat(actual).isNotEmpty();
-      Truth.assertThat(extractTextFromQrImage(actual)).isEqualTo(text);
+      Truth.assertThat(extractTextFromQrImage(actual)).isEqualTo(expectedText);
     } finally {
       clearState();
     }
@@ -70,7 +70,7 @@ public class QrCodeActor {
 
   private void clearState() {
     response = null;
-    text = null;
+    expectedText = null;
   }
 
   public void getQrCodeForNoText() {
@@ -81,10 +81,13 @@ public class QrCodeActor {
   }
 
   public void responseIsBadRequest() {
-    response.statusCode(Response.Status.BAD_REQUEST.getStatusCode());
-    ErrorResponse errorResponse = response.extract().body().as(ErrorResponse.class);
-    Truth.assertThat(errorResponse.message()).isNotNull();
-    Truth.assertThat(errorResponse.message()).isNotEmpty();
-    clearState();
+    try {
+      response.statusCode(Response.Status.BAD_REQUEST.getStatusCode());
+      ErrorResponse errorResponse = response.extract().body().as(ErrorResponse.class);
+      Truth.assertThat(errorResponse.message()).isNotNull();
+      Truth.assertThat(errorResponse.message()).isNotEmpty();
+    } finally {
+      clearState();
+    }
   }
 }

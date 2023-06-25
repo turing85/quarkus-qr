@@ -17,6 +17,16 @@
     <lombok.version>1.18.28</lombok.version>
     <surefire-plugin.version>3.1.2</surefire-plugin.version>
 
+    <!-- Quarkus versions -->
+    <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
+    <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
+    <quarkus.platform.version>3.1.2.Final</quarkus.platform.version>
+    <quarkus-cucumber.version>1.0.0</quarkus-cucumber.version>
+
+    <!-- Dependency versions -->
+    <quarkus-maven-plugin.skip>false</quarkus-maven-plugin.skip>
+    <zxing.version>3.5.1</zxing.version>
+
     <!-- Project setup -->
     <dependency-check-maven.skip>true</dependency-check-maven.skip>
     <dependency-check-maven.formats>html,junit</dependency-check-maven.formats>
@@ -28,17 +38,12 @@
     <maven.compiler.release>17</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <quarkus.container-image.additional-tags>jvm</quarkus.container-image.additional-tags>
+    <quarkus.docker.dockerfile-native-path>src/main/container/Containerfile.native-distroless</quarkus.docker.dockerfile-native-path>
+    <quarkus.docker.dockerfile-jvm-path>src/main/container/Containerfile.temurin</quarkus.docker.dockerfile-jvm-path>
+    <quarkus.native.builder-image>quay.io/quarkus/ubi-quarkus-mandrel-builder-image:22.3-java17@sha256:88b1d79140d2cc79e1e7808efdd72e930ee7ae07d56a7b9ad5e2152261488ef6</quarkus.native.builder-image>
+    <quarkus.native.container-build>true</quarkus.native.container-build>
     <skipITs>false</skipITs>
-
-    <!-- Quarkus setup -->
-    <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
-    <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-    <quarkus.platform.version>3.1.2.Final</quarkus.platform.version>
-    <quarkus-cucumber.version>1.0.0</quarkus-cucumber.version>
-
-    <!-- Dependency versions -->
-    <quarkus-maven-plugin.skip>false</quarkus-maven-plugin.skip>
-    <zxing.version>3.5.1</zxing.version>
   </properties>
 
   <build>
@@ -301,7 +306,6 @@
         <quarkus.container-image.group>${project.groupId}</quarkus.container-image.group>
         <quarkus.container-image.name>${project.artifactId}</quarkus.container-image.name>
         <quarkus.container-image.tag>latest</quarkus.container-image.tag>
-        <quarkus.docker.dockerfile-jvm-path>src/main/container/Containerfile.temurin</quarkus.docker.dockerfile-jvm-path>
       </properties>
     </profile>
     <profile>
@@ -356,11 +360,22 @@
       <properties>
         <quarkus.container-image.additional-tags>native</quarkus.container-image.additional-tags>
         <quarkus.docker.build-args.PROVIDER_IMAGE>${quarkus.native.builder-image}</quarkus.docker.build-args.PROVIDER_IMAGE>
-        <quarkus.docker.dockerfile-native-path>src/main/container/Containerfile.native-distroless</quarkus.docker.dockerfile-native-path>
-        <quarkus.native.builder-image>quay.io/quarkus/ubi-quarkus-mandrel-builder-image:22.3-java17@sha256:88b1d79140d2cc79e1e7808efdd72e930ee7ae07d56a7b9ad5e2152261488ef6</quarkus.native.builder-image>
-        <quarkus.native.container-build>true</quarkus.native.container-build>
         <quarkus.package.type>native</quarkus.package.type>
         <skipITs>false</skipITs>
+      </properties>
+    </profile>
+    <profile>
+      <id>native-compress</id>
+      <activation>
+        <property>
+          <name>native-compress</name>
+        </property>
+      </activation>
+      <properties>
+        <quarkus.container-image.additional-tags>native</quarkus.container-image.additional-tags>
+        <quarkus.docker.build-args.PROVIDER_IMAGE>${quarkus.native.builder-image}</quarkus.docker.build-args.PROVIDER_IMAGE>
+        <quarkus.docker.dockerfile-native-path>src/main/container/Containerfile.native-distroless-compressed</quarkus.docker.dockerfile-native-path>
+        <quarkus.package.type>native</quarkus.package.type>
       </properties>
     </profile>
     <profile>
