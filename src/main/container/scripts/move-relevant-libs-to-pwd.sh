@@ -14,7 +14,6 @@ function relevant_libs_regex() {
   echo ".*($(IFS='|'; echo "$(relevant_libs)"))\.so.*"
 }
 
-
 function copy_lib64_to_pwd() {
   cp \
    --no-dereference \

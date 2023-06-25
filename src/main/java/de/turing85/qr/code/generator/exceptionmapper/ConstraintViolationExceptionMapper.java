@@ -22,18 +22,18 @@ public class ConstraintViolationExceptionMapper
   @Override
   public Response toResponse(ConstraintViolationException exception) {
     String message = exception.getConstraintViolations().stream()
-        .map(violation -> constructViolationDescription(
-            getPropertyNameFromPath(violation).orElse(UNNAMED_PROPERTY), violation.getMessage()))
+        .map(ConstraintViolationExceptionMapper::constructViolationDescription)
         .collect(Collectors.joining("\n"));
     return Response.status(Response.Status.BAD_REQUEST).type(MediaType.APPLICATION_JSON_TYPE)
         .entity(new ErrorResponse(message)).build();
   }
 
-  private String constructViolationDescription(String propertyName, String message) {
-    return String.format(BODY_FORMAT, propertyName, message);
+  private static String constructViolationDescription(ConstraintViolation<?> violation) {
+    return String.format(BODY_FORMAT, getPropertyNameFromPath(violation).orElse(UNNAMED_PROPERTY),
+        violation.getMessage());
   }
 
-  private Optional<String> getPropertyNameFromPath(ConstraintViolation<?> violation) {
+  private static Optional<String> getPropertyNameFromPath(ConstraintViolation<?> violation) {
     String propertyName = null;
     for (Path.Node node : violation.getPropertyPath()) {
       propertyName = node.getName();
