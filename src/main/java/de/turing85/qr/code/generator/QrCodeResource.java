@@ -22,9 +22,10 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import io.smallrye.mutiny.Uni;
 import lombok.extern.log4j.Log4j2;
 
-@Path("qr-code")
+@Path(QrCodeResource.PATH)
 @Log4j2
 public class QrCodeResource {
+  public static final String PATH = "qr-code";
   private static final QRCodeWriter barcodeWriter = new QRCodeWriter();
 
   @GET
