@@ -16,6 +16,7 @@ import com.google.zxing.MultiFormatReader;
 import com.google.zxing.NotFoundException;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
+import de.turing85.qr.code.generator.QrCodeResource;
 import de.turing85.qr.code.generator.exceptionmapper.ErrorResponse;
 import io.restassured.response.ValidatableResponse;
 
@@ -33,7 +34,7 @@ public class QrCodeActor {
     this.text = text;
     // @formatter:off
     response = given().queryParam("text", text)
-        .when().get("qr-code")
+        .when().get(QrCodeResource.PATH)
         .then();
     // @formatter:on
   }
@@ -74,7 +75,7 @@ public class QrCodeActor {
 
   public void getQrCodeForNoText() {
     // @formatter:off
-    response = when().get("qr-code")
+    response = when().get(QrCodeResource.PATH)
         .then();
     // @formatter:on
   }
