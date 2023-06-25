@@ -365,10 +365,10 @@
       </properties>
     </profile>
     <profile>
-      <id>native-compress</id>
+      <id>native-compressed</id>
       <activation>
         <property>
-          <name>native-compress</name>
+          <name>native-compressed</name>
         </property>
       </activation>
       <properties>
