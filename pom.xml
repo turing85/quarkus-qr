@@ -13,8 +13,11 @@
     <dependency-check-maven.version>8.3.1</dependency-check-maven.version>
     <formatter-maven-plugin.version>2.23.0</formatter-maven-plugin.version>
     <impsort-maven-plugin.version>1.9.0</impsort-maven-plugin.version>
+    <install-plugin.version>3.1.1</install-plugin.version>
     <jacoco-maven-plugin.version>0.8.10</jacoco-maven-plugin.version>
+    <jar-plugin.version>3.3.0</jar-plugin.version>
     <lombok.version>1.18.28</lombok.version>
+    <resources-plugin.version>3.3.1</resources-plugin.version>
     <surefire-plugin.version>3.1.2</surefire-plugin.version>
 
     <!-- Quarkus versions -->
@@ -47,6 +50,25 @@
   </properties>
 
   <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>${install-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>${jar-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>${resources-plugin.version}</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>net.revelc.code.formatter</groupId>
@@ -93,6 +115,8 @@
         <version>${quarkus.platform.version}</version>
         <configuration>
           <skip>${quarkus-maven-plugin.skip}</skip>
+          <!-- TODO: Remove when https://github.com/quarkusio/quarkus/pull/34454 is available -->
+          <skipOriginalJarRename>true</skipOriginalJarRename>
         </configuration>
         <executions>
           <execution>
