@@ -28,7 +28,7 @@
 
     <!-- Dependency versions -->
     <quarkus-maven-plugin.skip>false</quarkus-maven-plugin.skip>
-    <zxing.version>3.5.1</zxing.version>
+    <zxing.version>3.5.2</zxing.version>
 
     <!-- Project setup -->
     <dependency-check-maven.skip>true</dependency-check-maven.skip>
