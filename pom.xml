@@ -115,8 +115,6 @@
         <version>${quarkus.platform.version}</version>
         <configuration>
           <skip>${quarkus-maven-plugin.skip}</skip>
-          <!-- TODO: Remove when https://github.com/quarkusio/quarkus/pull/34454 is available -->
-          <skipOriginalJarRename>true</skipOriginalJarRename>
         </configuration>
         <executions>
           <execution>
@@ -147,6 +145,7 @@
           <failBuildOnCVSS>0</failBuildOnCVSS>
           <formats>${dependency-check-maven.formats}</formats>
           <skip>${dependency-check-maven.skip}</skip>
+          <suppressionFile>src/test/resources/owasp-dependency-check.xml</suppressionFile>
         </configuration>
         <executions>
           <execution>
