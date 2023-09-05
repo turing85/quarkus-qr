@@ -57,7 +57,7 @@ jobs:
 
     steps:
       - name: Git checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Populate Cache
         uses: ./.github/actions/populate-cache
@@ -76,7 +76,7 @@ jobs:
 
     steps:
       - name: Git checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up ${{ env.GRAALVM_DISTRIBUTION}} ${{ env.MANDREL_VERSION }} (Java ${{ env.JAVA_VERSION }})
         uses: graalvm/setup-graalvm@v1
@@ -150,7 +150,7 @@ jobs:
 
     steps:
       - name: Git checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up ${{ env.GRAALVM_DISTRIBUTION}} ${{ env.MANDREL_VERSION }} (Java ${{ env.JAVA_VERSION }})
         uses: graalvm/setup-graalvm@v1
@@ -245,7 +245,7 @@ jobs:
 
     steps:
       - name: Git checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: OWASP Scan
         uses: ./.github/actions/owasp-scan
