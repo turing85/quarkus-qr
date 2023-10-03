@@ -4,4 +4,8 @@
         <notes>False-Positive per issue https://github.com/jeremylong/DependencyCheck/issues/5779</notes>
         <cve>CVE-2023-35116</cve>
     </suppress>
+    <suppress>
+        <notes>False-Positive per https://quarkusio.zulipchat.com/#narrow/stream/187030-users/topic/CVE-2023-4586/near/394570596</notes>
+        <cve>CVE-2023-4586</cve>
+    </suppress>
 </suppressions>
