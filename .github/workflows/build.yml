@@ -32,7 +32,6 @@ env:
   GRAALVM_DISTRIBUTION: mandrel
   GRAALVM_VERSION: mandrel-23.0.1.2-Final
   JAVA_VERSION: 17
-  MANDREL_VERSION: 23.0.1.2-Final
 
 permissions:
   actions: write
@@ -78,7 +77,7 @@ jobs:
       - name: Git checkout
         uses: actions/checkout@v4
 
-      - name: Set up ${{ env.GRAALVM_DISTRIBUTION}} ${{ env.MANDREL_VERSION }} (Java ${{ env.JAVA_VERSION }})
+      - name: Set up ${{ env.GRAALVM_DISTRIBUTION}} ${{ env.GRAALVM_VERSION }} (Java ${{ env.JAVA_VERSION }})
         uses: graalvm/setup-graalvm@v1
         with:
           cache: 'maven'
@@ -152,7 +151,7 @@ jobs:
       - name: Git checkout
         uses: actions/checkout@v4
 
-      - name: Set up ${{ env.GRAALVM_DISTRIBUTION}} ${{ env.MANDREL_VERSION }} (Java ${{ env.JAVA_VERSION }})
+      - name: Set up ${{ env.GRAALVM_DISTRIBUTION}} ${{ env.GRAALVM_VERSION }} (Java ${{ env.JAVA_VERSION }})
         uses: graalvm/setup-graalvm@v1
         with:
           cache: 'maven'
