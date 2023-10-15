@@ -246,5 +246,5 @@ jobs:
         uses: ./.github/actions/owasp-scan
         with:
           graalvm-distribution: ${{ env.GRAALVM_DISTRIBUTION }}
-          graalvm-version: ${{ env.GRAALVM_DISTRIBUTION }}-${{ env.MANDREL_VERSION }}
-          java-version: ${{ env.GRAALVM_VERSION }}
+          graalvm-version: ${{ env.GRAALVM_VERSION }}
+          java-version: ${{ env.JAVA_VERSION }}
