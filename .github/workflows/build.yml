@@ -30,9 +30,9 @@ concurrency:
 env:
   DOCKER_BUILDKIT: 1
   GRAALVM_DISTRIBUTION: mandrel
-  GRAALVM_VERSION: mandrel-latest
+  GRAALVM_VERSION: mandrel-23.0.1.2-Final
   JAVA_VERSION: 17
-  MANDREL_VERSION: latest
+  MANDREL_VERSION: 23.0.1.2-Final
 
 permissions:
   actions: write
@@ -160,11 +160,6 @@ jobs:
           java-version: ${{ env.JAVA_VERSION }}
           version: ${{ env.GRAALVM_VERSION }}
 
-      # TODO: Remove if bug in quarkus is fixed
-      - name: Pre-pull builder-image
-        run: |
-          docker pull quay.io/quarkus/ubi-quarkus-mandrel-builder-image:23.0-java17@sha256:2016d11266d8a8beb3fa76b0d12cc4399e99821afaeac32e2273d3cc1b2bda0b
-
       - name: Build and Test
         run: |
           ./mvnw \
@@ -252,4 +247,4 @@ jobs:
         with:
           graalvm-distribution: ${{ env.GRAALVM_DISTRIBUTION }}
           graalvm-version: ${{ env.GRAALVM_DISTRIBUTION }}-${{ env.MANDREL_VERSION }}
-          java-version: ${{ env.JAVA_VERSION }}
+          java-version: ${{ env.GRAALVM_VERSION }}
