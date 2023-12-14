@@ -18,7 +18,7 @@
     <jar-plugin.version>3.3.0</jar-plugin.version>
     <lombok.version>1.18.30</lombok.version>
     <resources-plugin.version>3.3.1</resources-plugin.version>
-    <surefire-plugin.version>3.2.2</surefire-plugin.version>
+    <surefire-plugin.version>3.2.3</surefire-plugin.version>
 
     <!-- Quarkus versions -->
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
