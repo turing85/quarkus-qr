@@ -45,7 +45,7 @@ jobs:
 
     steps:
       - name: Publish Report
-        uses: turing85/publish-report@v1.0.11
+        uses: turing85/publish-report@v1.0.12
         with:
           checkout: true
           recreate-comment: true
@@ -199,7 +199,7 @@ jobs:
 
     steps:
       - name: Publish report (JVM Test)
-        uses: turing85/publish-report@v1.0.11
+        uses: turing85/publish-report@v1.0.12
         if: ${{ always() }}
         with:
           cancel-workflow-on-error: true
@@ -219,7 +219,7 @@ jobs:
 
     steps:
       - name: Publish Report (Native Test)
-        uses: turing85/publish-report@v1.0.11
+        uses: turing85/publish-report@v1.0.12
         if: ${{ always() }}
         with:
           cancel-workflow-on-error: true
