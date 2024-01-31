@@ -27,7 +27,7 @@
     <quarkus-cucumber.version>1.0.0</quarkus-cucumber.version>
 
     <!-- Dependency versions -->
-    <zxing.version>3.5.2</zxing.version>
+    <zxing.version>3.5.3</zxing.version>
 
     <!-- Project setup -->
     <dependency-check-maven.skip>true</dependency-check-maven.skip>
