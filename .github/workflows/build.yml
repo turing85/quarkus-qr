@@ -45,7 +45,7 @@ jobs:
 
     steps:
       - name: Publish Report
-        uses: turing85/publish-report@v1.0.11
+        uses: turing85/publish-report@v2
         with:
           checkout: true
           recreate-comment: true
@@ -96,7 +96,7 @@ jobs:
             verify
 
       - name: Upload Maven State
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
           if-no-files-found: error
@@ -105,7 +105,7 @@ jobs:
           retention-days: 2
 
       - name: Upload Compiled Classes
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
           if-no-files-found: error
@@ -114,7 +114,7 @@ jobs:
           retention-days: 2
 
       - name: Upload JARs
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
           if-no-files-found: error
@@ -123,7 +123,7 @@ jobs:
           retention-days: 2
 
       - name: Upload Fast-JAR
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
           if-no-files-found: error
@@ -132,7 +132,7 @@ jobs:
           retention-days: 2
 
       - name: Upload Test Report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
           if-no-files-found: error
@@ -171,7 +171,7 @@ jobs:
             verify
 
       - name: Upload executable
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
           if-no-files-found: error
@@ -182,7 +182,7 @@ jobs:
           retention-days: 2
 
       - name: Upload Test Report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
           if-no-files-found: error
@@ -200,7 +200,7 @@ jobs:
 
     steps:
       - name: Publish report (JVM Test)
-        uses: turing85/publish-report@v1.0.11
+        uses: turing85/publish-report@v2
         if: ${{ always() }}
         with:
           cancel-workflow-on-error: true
@@ -220,7 +220,7 @@ jobs:
 
     steps:
       - name: Publish Report (Native Test)
-        uses: turing85/publish-report@v1.0.11
+        uses: turing85/publish-report@v2
         if: ${{ always() }}
         with:
           cancel-workflow-on-error: true
