@@ -32,14 +32,18 @@
     <!-- Project setup -->
     <dependency-check-maven.skip>true</dependency-check-maven.skip>
     <dependency-check-maven.formats>html,junit</dependency-check-maven.formats>
-    <dependency-check-maven.goal>check</dependency-check-maven.goal>
+
     <formatter-maven-plugin.goal>format</formatter-maven-plugin.goal>
     <formatter-maven-plugin.skip>false</formatter-maven-plugin.skip>
+
     <impsort-maven-plugin.goal>sort</impsort-maven-plugin.goal>
     <impsort-maven-plugin.skip>false</impsort-maven-plugin.skip>
+
     <maven.compiler.release>17</maven.compiler.release>
+
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
     <quarkus.container-image.additional-tags>jvm</quarkus.container-image.additional-tags>
     <quarkus.docker.dockerfile-native-path>src/main/container/Containerfile.native-distroless</quarkus.docker.dockerfile-native-path>
     <quarkus.docker.dockerfile-jvm-path>src/main/container/Containerfile.temurin</quarkus.docker.dockerfile-jvm-path>
@@ -128,6 +132,7 @@
         <extensions>true</extensions>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>${compiler-plugin.version}</version>
         <configuration>
@@ -150,13 +155,14 @@
         <executions>
           <execution>
             <goals>
-              <goal>${dependency-check-maven.goal}</goal>
+              <goal>check</goal>
             </goals>
             <phase>package</phase>
           </execution>
         </executions>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>${surefire-plugin.version}</version>
         <configuration>
@@ -167,6 +173,7 @@
         </configuration>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-failsafe-plugin</artifactId>
         <version>${surefire-plugin.version}</version>
         <executions>
@@ -360,20 +367,6 @@
       </properties>
     </profile>
     <profile>
-      <id>ci-populate-cache</id>
-      <activation>
-        <property>
-          <name>ci-populate-cache</name>
-        </property>
-      </activation>
-      <properties>
-        <dependency-check-maven.goal>update-only</dependency-check-maven.goal>
-        <dependency-check-maven.skip>false</dependency-check-maven.skip>
-        <formatter-maven-plugin.skip>true</formatter-maven-plugin.skip>
-        <impsort-maven-plugin.skip>true</impsort-maven-plugin.skip>
-      </properties>
-    </profile>
-    <profile>
       <id>native</id>
       <activation>
         <property>
@@ -411,10 +404,10 @@
       </properties>
     </profile>
     <profile>
-      <id>skipFormat</id>
+      <id>skip-format</id>
       <activation>
         <property>
-          <name>skipFormat</name>
+          <name>skip-format</name>
         </property>
       </activation>
       <properties>
