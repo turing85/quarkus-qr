@@ -20,6 +20,10 @@ inputs:
     description: The Java version to use
     default: '17'
     required: true
+  owasp-data-cache:
+    description: The name of the owasp data cache.
+    default: owasp-data-cache
+    required: true
 
 runs:
   using: composite
@@ -32,6 +36,12 @@ runs:
         distribution: ${{ inputs.graalvm-distribution }}
         java-version: ${{ inputs.java-version }}
         version: ${{ inputs.graalvm-version }}
+
+    - name: OWASP cache
+      uses: actions/cache@v4
+      with:
+        key: ${{ inputs.owasp-data-cache }}
+        path: ${{ github.workspace }}/${{ inputs.owasp-data-cache }}
 
     - name: Download Maven State
       uses: actions/download-artifact@v3
@@ -58,6 +68,7 @@ runs:
           --batch-mode \
           --color always \
           --define ci-owasp \
+          --define dataDirectory=${{ inputs.owasp-data-cache }} \
           package
 
     - name: Upload OWASP Scan Report
