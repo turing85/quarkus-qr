@@ -68,7 +68,7 @@ runs:
           --batch-mode \
           --color always \
           --define ci-owasp \
-          --define dataDirectory=${{ inputs.owasp-data-cache }} \
+          --define dataDirectory=${{ github.workspace }}/${{ inputs.owasp-data-cache }} \
           package
 
     - name: Upload OWASP Scan Report
