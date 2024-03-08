@@ -16,10 +16,7 @@ inputs:
     description: The Java version to use
     default: '17'
     required: true
-  owasp-data-cache:
-    description: The name of the owasp data cache.
-    default: owasp-data-cache
-    required: true
+
 
 runs:
   using: composite
@@ -34,33 +31,17 @@ runs:
         java-version: ${{ inputs.java-version }}
         version: ${{ inputs.graalvm-version }}
 
-    - name: Populate Maven Cache
+    - name: Populate Cache
       if: ${{ steps.setup.outputs.cache-hit != 'true' }}
       shell: sh
       run: |
         ./mvnw \
           --batch-mode \
           --color always \
-          --define dataDirectory=${{ github.workspace }}/${{ inputs.owasp-data-cache }} \
+          --define ci-populate-cache \
+          verify \
           quarkus:go-offline \
           de.qaware.maven:go-offline-maven-plugin:resolve-dependencies
-
-    - name: OWASP cache
-      id: owasp-cache
-      uses: actions/cache@v4
-      with:
-        key: ${{ inputs.owasp-data-cache }}
-        path: ${{ github.workspace }}/${{ inputs.owasp-data-cache }}
-
-    - name: Populate OWASP data cache
-      if: ${{ steps.owasp-cache.outputs.cache-hit != 'true' }}
-      shell: sh
-      run: |
-        ./mvnw \
-          --batch-mode \
-          --color always \
-          --define dataDirectory=${{ github.workspace }}/${{ inputs.owasp-data-cache }} \
-          dependency-check:update-only
 
     - name: Cancel Build
       if: ${{ failure() }}
