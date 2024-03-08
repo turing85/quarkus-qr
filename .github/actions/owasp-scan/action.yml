@@ -20,6 +20,9 @@ inputs:
     description: The Java version to use
     default: '17'
     required: true
+  nvd-api-key:
+    description: The API key for the NVD database, used by the dependency-check scan plugin
+    required: true
 
 runs:
   using: composite
@@ -58,6 +61,7 @@ runs:
           --batch-mode \
           --color always \
           --define ci-owasp \
+          --define nvdApiKey=${{ inputs.nvd-api-key }} \
           package
 
     - name: Upload OWASP Scan Report
