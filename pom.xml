@@ -10,7 +10,7 @@
   <properties>
     <!-- Plugin versions -->
     <compiler-plugin.version>3.13.0</compiler-plugin.version>
-    <dependency-check-maven.version>9.0.10</dependency-check-maven.version>
+    <dependency-check-maven.version>9.1.0</dependency-check-maven.version>
     <formatter-maven-plugin.version>2.23.0</formatter-maven-plugin.version>
     <impsort-maven-plugin.version>1.9.0</impsort-maven-plugin.version>
     <install-plugin.version>3.1.1</install-plugin.version>
