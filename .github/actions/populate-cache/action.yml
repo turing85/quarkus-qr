@@ -10,11 +10,11 @@ inputs:
     required: true
   graalvm-version:
     description: The version of the GraalVM distribution to use
-    default: 22.3.1-Final
+    default: 23.1.2.0-Final
     required: true
   java-version:
     description: The Java version to use
-    default: '17'
+    default: '21'
     required: true
   nvd-api-key:
     description: The API key for the NVD database, used by the dependency-check scan plugin
