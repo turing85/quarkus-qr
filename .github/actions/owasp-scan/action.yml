@@ -36,6 +36,12 @@ runs:
         java-version: ${{ inputs.java-version }}
         version: ${{ inputs.graalvm-version }}
 
+    - name: OWASP DB Cache
+      uses: actions/cache@v4
+      with:
+        path: owasp-db
+        key: owasp-db
+
     - name: Download Maven State
       uses: actions/download-artifact@v4
       if: ${{ inputs.download-artifacts == 'true' }}
@@ -61,6 +67,7 @@ runs:
           --batch-mode \
           --color always \
           --define ci-owasp \
+          --define dataDirectory=owasp-db \
           --define nvdApiKey=${{ inputs.nvd-api-key }} \
           package
 
