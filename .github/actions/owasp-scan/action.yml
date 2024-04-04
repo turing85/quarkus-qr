@@ -46,7 +46,7 @@ runs:
       uses: actions/download-artifact@v4
       if: ${{ inputs.download-artifacts == 'true' }}
       with:
-        pattern: maven-state
+        name: maven-state
 
     - name: Download Compiled Classes
       uses: actions/download-artifact@v4
