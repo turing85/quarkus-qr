@@ -82,7 +82,7 @@ runs:
 
     - name: Publish Report
       if: ${{ always() }}
-      uses: turing85/publish-report@main
+      uses: turing85/publish-report@v2
       with:
         report-list-tests: failed
         report-name: OWASP Scan
