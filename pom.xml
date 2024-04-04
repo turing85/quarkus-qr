@@ -30,7 +30,6 @@
     <zxing.version>3.5.3</zxing.version>
 
     <!-- Project setup -->
-    <dependency-check-maven.goal>check</dependency-check-maven.goal>
     <dependency-check-maven.skip>true</dependency-check-maven.skip>
     <dependency-check-maven.formats>html,junit</dependency-check-maven.formats>
 
@@ -157,7 +156,7 @@
         <executions>
           <execution>
             <goals>
-              <goal>${dependency-check-maven.goal}</goal>
+              <goal>check</goal>
             </goals>
             <phase>package</phase>
           </execution>
@@ -376,8 +375,7 @@
         </property>
       </activation>
       <properties>
-        <dependency-check-maven.goal>update-only</dependency-check-maven.goal>
-        <dependency-check-maven.skip>false</dependency-check-maven.skip>
+        <dependency-check-maven.skip>true</dependency-check-maven.skip>
         <formatter-maven-plugin.skip>true</formatter-maven-plugin.skip>
         <impsort-maven-plugin.skip>true</impsort-maven-plugin.skip>
       </properties>
