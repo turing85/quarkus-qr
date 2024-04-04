@@ -16,9 +16,6 @@ inputs:
     description: The Java version to use
     default: '21'
     required: true
-  nvd-api-key:
-    description: The API key for the NVD database, used by the dependency-check scan plugin
-    required: true
 
 runs:
   using: composite
@@ -47,8 +44,6 @@ runs:
           --batch-mode \
           --color always \
           --define ci-populate-cache \
-          --define dataDirectory=owasp-db \
-          --define nvdApiKey=${{ inputs.nvd-api-key }} \
           verify \
           quarkus:go-offline \
           de.qaware.maven:go-offline-maven-plugin:resolve-dependencies
