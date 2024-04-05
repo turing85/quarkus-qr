@@ -36,11 +36,12 @@ runs:
         java-version: ${{ inputs.java-version }}
         version: ${{ inputs.graalvm-version }}
 
-    - name: Download OWASP DB Cache
+    - name: OWASP DB Cache
       uses: actions/cache@v4
       with:
-        path: owasp-db
         key: owasp-db
+        path: owasp-db
+        save-always: true
 
     - name: Download Maven State
       uses: actions/download-artifact@v4
@@ -70,13 +71,6 @@ runs:
           --define dataDirectory=owasp-db \
           --define nvdApiKey=${{ inputs.nvd-api-key }} \
           package
-
-    - name: Upload OWASP DB Cache
-      uses: actions/cache/save@v4
-      if: ${{ always() }}
-      with:
-        path: owasp-db
-        key: owasp-db
 
     - name: Upload OWASP Scan Report
       uses: actions/upload-artifact@v4
