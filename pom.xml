@@ -15,7 +15,7 @@
     <impsort-maven-plugin.version>1.9.0</impsort-maven-plugin.version>
     <install-plugin.version>3.1.1</install-plugin.version>
     <jacoco-maven-plugin.version>0.8.12</jacoco-maven-plugin.version>
-    <jar-plugin.version>3.3.0</jar-plugin.version>
+    <jar-plugin.version>3.4.0</jar-plugin.version>
     <lombok.version>1.18.32</lombok.version>
     <resources-plugin.version>3.3.1</resources-plugin.version>
     <surefire-plugin.version>3.2.5</surefire-plugin.version>
