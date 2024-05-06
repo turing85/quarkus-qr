@@ -389,7 +389,7 @@
       </activation>
       <properties>
         <quarkus.container-image.additional-tags>native</quarkus.container-image.additional-tags>
-        <quarkus.package.type>native</quarkus.package.type>
+        <quarkus.native.enabled>true</quarkus.native.enabled>
         <skipITs>false</skipITs>
       </properties>
     </profile>
@@ -403,7 +403,7 @@
       <properties>
         <quarkus.container-image.additional-tags>native</quarkus.container-image.additional-tags>
         <quarkus.docker.dockerfile-native-path>src/main/container/Containerfile.native-distroless-compressed</quarkus.docker.dockerfile-native-path>
-        <quarkus.package.type>native</quarkus.package.type>
+        <quarkus.native.enabled>true</quarkus.native.enabled>
       </properties>
     </profile>
     <profile>
