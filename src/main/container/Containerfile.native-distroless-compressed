@@ -1,11 +1,11 @@
-ARG COMPRESSOR_IMAGE="docker.io/alpine:3.19.1@sha256:c5b1261d6d3e43071626931fc004f70149baeba2c8ec672bd4f27761f8e1ad6b"
-ARG DISTROLESS_IMAGE="quay.io/quarkus/quarkus-distroless-image:2.0@sha256:3b73eb32233f68cc10facb3deec858db3db230830c3a75a78dbb9100ba394a76"
+ARG COMPRESSOR_IMAGE="docker.io/alpine:3.20.1@sha256:b89d9c93e9ed3597455c90a0b88a8bbb5cb7188438f70953fede212a0c4394e0"
+ARG DISTROLESS_IMAGE="quay.io/quarkus/quarkus-distroless-image:2.0-2024-07-07@sha256:3e03e8cc07a8e631e2b14b1b013a6b640e92c454acc1e44f1792743ba51af694"
 
 FROM ${COMPRESSOR_IMAGE} AS compressor
 ARG UPX_INSTALLATION_COMMAND="apk add \
-    libgcc=13.2.1_git20231014-r0 \
-    libstdc++=13.2.1_git20231014-r0 \
-    upx=4.2.1-r0 \
+    libgcc=13.2.1_git20240309-r0 \
+    libstdc++=13.2.1_git20240309-r0 \
+    upx=4.2.4-r0 \
   && rm -rf /var/cache/apt/*"
 ARG UPX_COMPRESSION_MODE="--fast"
 
@@ -28,7 +28,7 @@ USER root
 WORKDIR ${APP_DIR}
 COPY \
   --chmod=444 \
-  /target/*.so /lib/
+  target/*.so /lib/
 COPY \
   --from=compressor \
   --chmod=555 \
