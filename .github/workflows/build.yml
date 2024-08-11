@@ -60,7 +60,7 @@ jobs:
         --define ci-populate-cache
       maven-targets-jvm: verify
       maven-targets-native: verify
-      maven-targets-owasp: package
+      maven-targets-owasp: org.owasp:dependency-check-maven:check
       maven-targets-populate: >-
         verify
         quarkus:go-offline
