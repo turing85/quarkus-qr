@@ -49,8 +49,7 @@ jobs:
         --batch-mode
         --color always
         --define build-container-image
-        --define ci
-        --define native-compressed
+        --define ci-native-compressed
       maven-opts-owasp: >-
         --batch-mode
         --color always
