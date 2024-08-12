@@ -39,7 +39,7 @@ jobs:
 
   populate-cache:
     name: Populate cache
-    uses: turing85/shared-github-workflows/.github/workflows/java-populate-cache.yml@main
+    uses: turing85/shared-github-workflows/.github/workflows/maven-populate-cache.yml@main
     with:
       graalvm-distribution: mandrel
       graalvm-version: mandrel-23.1.2.0-Final
@@ -61,7 +61,7 @@ jobs:
       - populate-cache
       - recreate-comment
 
-    uses: turing85/shared-github-workflows/.github/workflows/java-quarkus-single-module-build.yml@main
+    uses: turing85/shared-github-workflows/.github/workflows/maven-quarkus-single-module-build.yml@main
     with:
       maven-opts-jvm: >-
         --batch-mode
@@ -83,7 +83,7 @@ jobs:
       - populate-cache
       - recreate-comment
 
-    uses: turing85/shared-github-workflows/.github/workflows/java-owasp-scan.yml@main
+    uses: turing85/shared-github-workflows/.github/workflows/maven-owasp-scan.yml@main
     with:
       graalvm-distribution: mandrel
       graalvm-version: mandrel-23.1.2.0-Final
