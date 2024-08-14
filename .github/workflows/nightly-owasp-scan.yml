@@ -1,4 +1,4 @@
-name: Nightly CVE Scan
+name: Nightly OWASP Scan
 
 on:
   workflow_dispatch:

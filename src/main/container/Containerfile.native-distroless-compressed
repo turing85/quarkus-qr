@@ -1,5 +1,5 @@
-ARG COMPRESSOR_IMAGE="docker.io/alpine:3.20.1@sha256:b89d9c93e9ed3597455c90a0b88a8bbb5cb7188438f70953fede212a0c4394e0"
-ARG DISTROLESS_IMAGE="quay.io/quarkus/quarkus-distroless-image:2.0-2024-07-07@sha256:3e03e8cc07a8e631e2b14b1b013a6b640e92c454acc1e44f1792743ba51af694"
+ARG COMPRESSOR_IMAGE="docker.io/alpine:3.20.2@sha256:0a4eaa0eecf5f8c050e5bba433f58c052be7587ee8af3e8b3910ef9ab5fbe9f5"
+ARG DISTROLESS_IMAGE="quay.io/quarkus/quarkus-distroless-image:2.0-2024-08-04@sha256:4fccb2232ce42c3454901daff17aedb197ca4dfbad6c98a748d2c4a07089c019"
 
 FROM ${COMPRESSOR_IMAGE} AS compressor
 ARG UPX_INSTALLATION_COMMAND="apk add \
