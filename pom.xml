@@ -10,15 +10,13 @@
 
     <properties>
         <!-- Plugin versions -->
+        <assembly-plugin.version>3.7.1</assembly-plugin.version>
         <compiler-plugin.version>3.13.0</compiler-plugin.version>
         <dependency-check-maven.version>10.0.3</dependency-check-maven.version>
         <formatter-maven-plugin.version>2.24.1</formatter-maven-plugin.version>
         <impsort-maven-plugin.version>1.11.0</impsort-maven-plugin.version>
-        <install-plugin.version>3.1.2</install-plugin.version>
         <jacoco-maven-plugin.version>0.8.12</jacoco-maven-plugin.version>
-        <jar-plugin.version>3.4.2</jar-plugin.version>
-        <lombok.version>1.18.34</lombok.version>
-        <resources-plugin.version>3.3.1</resources-plugin.version>
+        <source-plugin.version>3.3.1</source-plugin.version>
         <surefire-plugin.version>3.3.1</surefire-plugin.version>
 
         <!-- Quarkus versions -->
@@ -28,18 +26,28 @@
         <quarkus-cucumber.version>1.0.0</quarkus-cucumber.version>
 
         <!-- Dependency versions -->
+        <lombok.version>1.18.34</lombok.version>
         <zxing.version>3.5.3</zxing.version>
 
         <!-- Project setup -->
+        <attach-elf.skip>true</attach-elf.skip>
+        <attach-fast-jar.skip>false</attach-fast-jar.skip>
+
+        <dependency-check-maven.goal>check</dependency-check-maven.goal>
         <dependency-check-maven.skip>true</dependency-check-maven.skip>
         <dependency-check-maven.formats>html,junit</dependency-check-maven.formats>
 
         <formatter-maven-plugin.goal>format</formatter-maven-plugin.goal>
         <formatter-maven-plugin.skip>false</formatter-maven-plugin.skip>
 
+        <git.url.https>https://github.com/turing85/quarkus-qr.git</git.url.https>
+        <git.url.ssh>git@github.com:turing85/quarkus-qr.git</git.url.ssh>
+
         <impsort-maven-plugin.goal>sort</impsort-maven-plugin.goal>
         <impsort-maven-plugin.skip>false</impsort-maven-plugin.skip>
 
+        <maven.compiler.parameters>true</maven.compiler.parameters>
+        <maven.compiler.proc>full</maven.compiler.proc>
         <maven.compiler.release>21</maven.compiler.release>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -51,9 +59,39 @@
         <quarkus-maven-plugin.skip>false</quarkus-maven-plugin.skip>
         <quarkus.native.builder-image>quay.io/quarkus/ubi-quarkus-mandrel-builder-image:23.1.4.0-Final-java21-2024-08-11@sha256:4407eee3091930c136de860e66cbdf728ba4e9feebd77eb09e186f630b08daac</quarkus.native.builder-image>
         <quarkus.native.container-build>true</quarkus.native.container-build>
+        <quarkus.package.jar.add-runner-suffix>false</quarkus.package.jar.add-runner-suffix>
+
         <surefire-plugin.skip>false</surefire-plugin.skip>
-        <skipITs>false</skipITs>
     </properties>
+
+    <url>https://github.com/turing85/quarkus-qr</url>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
+        <site>
+            <id>github.com</id>
+            <url>${project.url}</url>
+        </site>
+    </distributionManagement>
+    <scm>
+        <connection>scm:${git.url.ssh}</connection>
+        <developerConnection>scm:${git.url.ssh}</developerConnection>
+        <url>${project.url}</url>
+        <tag>@{project.version}</tag>
+    </scm>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
     <build>
         <plugins>
@@ -80,7 +118,6 @@
                 <artifactId>impsort-maven-plugin</artifactId>
                 <version>${impsort-maven-plugin.version}</version>
                 <configuration>
-                    <compliance>17</compliance>
                     <groups>java.,javax.,jakarta.,*</groups>
                     <lineEnding>LF</lineEnding>
                     <removeUnused>true</removeUnused>
@@ -96,6 +133,20 @@
                         <phase>validate</phase>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${compiler-plugin.version}</version>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>${quarkus.platform.group-id}</groupId>
@@ -117,13 +168,13 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${compiler-plugin.version}</version>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire-plugin.version}</version>
                 <configuration>
-                    <compilerArgs>
-                        <arg>-parameters</arg>
-                    </compilerArgs>
-                    <proc>full</proc>
+                    <systemPropertyVariables>
+                        <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+                        <maven.home>${maven.home}</maven.home>
+                    </systemPropertyVariables>
                 </configuration>
             </plugin>
             <plugin>
@@ -140,7 +191,7 @@
                 <executions>
                     <execution>
                         <goals>
-                            <goal>check</goal>
+                            <goal>${dependency-check-maven.goal}</goal>
                         </goals>
                         <phase>package</phase>
                     </execution>
@@ -148,43 +199,21 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
+                <artifactId>maven-failsafe-plugin</artifactId>
                 <version>${surefire-plugin.version}</version>
                 <configuration>
-                    <skip>${surefire-plugin.skip}</skip>
                     <systemPropertyVariables>
+                        <native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>
                         <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
                         <maven.home>${maven.home}</maven.home>
                     </systemPropertyVariables>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>${resources-plugin.version}</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>${jar-plugin.version}</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>${surefire-plugin.version}</version>
                 <executions>
                     <execution>
                         <goals>
                             <goal>integration-test</goal>
                             <goal>verify</goal>
                         </goals>
-                        <configuration>
-                            <systemPropertyVariables>
-                                <native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>
-                                <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
-                                <maven.home>${maven.home}</maven.home>
-                            </systemPropertyVariables>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -224,8 +253,85 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-install-plugin</artifactId>
-                <version>${install-plugin.version}</version>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${source-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>${assembly-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>tar-gz-fast-jar</id>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <phase>verify</phase>
+                        <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <inlineDescriptors>
+                                <inlineDescriptor>
+                                    <id>tar-gz-fast-jar</id>
+                                    <includeBaseDirectory>false</includeBaseDirectory>
+                                    <formats>
+                                        <format>tar.gz</format>
+                                    </formats>
+                                    <fileSets>
+                                        <fileSet>
+                                            <outputDirectory>/</outputDirectory>
+                                            <directory>${project.build.directory}/quarkus-app</directory>
+                                            <useDefaultExcludes>false</useDefaultExcludes>
+                                        </fileSet>
+                                    </fileSets>
+                                </inlineDescriptor>
+                            </inlineDescriptors>
+                            <skipAssembly>${attach-fast-jar.skip}</skipAssembly>
+                            <tarLongFileMode>posix</tarLongFileMode>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>tar-gz-native</id>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <phase>verify</phase>
+                        <configuration>
+                            <appendAssemblyId>true</appendAssemblyId>
+                            <finalName>elf</finalName>
+                            <inlineDescriptors>
+                                <inlineDescriptor>
+                                    <id>elf</id>
+                                    <includeBaseDirectory>false</includeBaseDirectory>
+                                    <formats>
+                                        <format>tar.gz</format>
+                                    </formats>
+                                    <fileSets>
+                                        <fileSet>
+                                            <outputDirectory>/</outputDirectory>
+                                            <directory>${project.build.directory}</directory>
+                                            <includes>
+                                                <inclue>${project.build.finalName}-runner</inclue>
+                                                <include>*.so</include>
+                                            </includes>
+                                            <useDefaultExcludes>false</useDefaultExcludes>
+                                        </fileSet>
+                                    </fileSets>
+                                </inlineDescriptor>
+                            </inlineDescriptors>
+                            <skipAssembly>${attach-elf.skip}</skipAssembly>
+                            <tarLongFileMode>posix</tarLongFileMode>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
@@ -357,6 +463,8 @@
                 </property>
             </activation>
             <properties>
+                <attach-elf.skip>true</attach-elf.skip>
+                <attach-fast-jar.skip>true</attach-fast-jar.skip>
                 <formatter-maven-plugin.goal>validate</formatter-maven-plugin.goal>
                 <impsort-maven-plugin.goal>check</impsort-maven-plugin.goal>
             </properties>
@@ -369,11 +477,14 @@
                 </property>
             </activation>
             <properties>
+                <attach-elf.skip>true</attach-elf.skip>
+                <attach-fast-jar.skip>true</attach-fast-jar.skip>
                 <formatter-maven-plugin.skip>true</formatter-maven-plugin.skip>
                 <impsort-maven-plugin.skip>true</impsort-maven-plugin.skip>
                 <quarkus.container-image.additional-tags>native</quarkus.container-image.additional-tags>
                 <quarkus.docker.dockerfile-native-path>src/main/container/Containerfile.native-distroless-compressed</quarkus.docker.dockerfile-native-path>
                 <quarkus.native.enabled>true</quarkus.native.enabled>
+                <quarkus.package.jar.add-runner-suffix>true</quarkus.package.jar.add-runner-suffix>
                 <surefire-plugin.skip>true</surefire-plugin.skip>
             </properties>
         </profile>
@@ -385,6 +496,8 @@
                 </property>
             </activation>
             <properties>
+                <attach-elf.skip>true</attach-elf.skip>
+                <attach-fast-jar.skip>true</attach-fast-jar.skip>
                 <dependency-check-maven.formats>junit</dependency-check-maven.formats>
                 <dependency-check-maven.skip>false</dependency-check-maven.skip>
                 <formatter-maven-plugin.skip>true</formatter-maven-plugin.skip>
@@ -401,6 +514,9 @@
                 </property>
             </activation>
             <properties>
+                <attach-elf.skip>true</attach-elf.skip>
+                <attach-fast-jar.skip>true</attach-fast-jar.skip>
+                <dependency-check-maven.skip>true</dependency-check-maven.skip>
                 <formatter-maven-plugin.skip>true</formatter-maven-plugin.skip>
                 <impsort-maven-plugin.skip>true</impsort-maven-plugin.skip>
             </properties>
@@ -413,9 +529,11 @@
                 </property>
             </activation>
             <properties>
+                <attach-elf.skip>false</attach-elf.skip>
+                <attach-fast-jar.skip>true</attach-fast-jar.skip>
                 <quarkus.container-image.additional-tags>native</quarkus.container-image.additional-tags>
                 <quarkus.native.enabled>true</quarkus.native.enabled>
-                <skipITs>false</skipITs>
+                <quarkus.package.jar.add-runner-suffix>true</quarkus.package.jar.add-runner-suffix>
             </properties>
         </profile>
         <profile>
@@ -426,9 +544,12 @@
                 </property>
             </activation>
             <properties>
+                <attach-elf.skip>false</attach-elf.skip>
+                <attach-fast-jar.skip>true</attach-fast-jar.skip>
                 <quarkus.container-image.additional-tags>native</quarkus.container-image.additional-tags>
                 <quarkus.docker.dockerfile-native-path>src/main/container/Containerfile.native-distroless-compressed</quarkus.docker.dockerfile-native-path>
                 <quarkus.native.enabled>true</quarkus.native.enabled>
+                <quarkus.package.jar.add-runner-suffix>true</quarkus.package.jar.add-runner-suffix>
             </properties>
         </profile>
         <profile>
