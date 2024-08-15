@@ -31,7 +31,7 @@ COPY \
   target/*.so /lib/
 COPY \
   --from=compressor \
-  --chmod=555 \
+  --chmod=111 \
    /project/application-compressed ${APP_DIR}/application
 
 ENV LANGUAGE='en_US:en'
