@@ -83,7 +83,7 @@
         <connection>scm:${git.url.ssh}</connection>
         <developerConnection>scm:${git.url.ssh}</developerConnection>
         <url>${project.url}</url>
-        <tag>@{project.version}</tag>
+        <tag>HEAD</tag>
     </scm>
     <licenses>
         <license>
