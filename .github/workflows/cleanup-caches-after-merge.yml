@@ -12,3 +12,5 @@ jobs:
   cleanup:
     name: Build
     uses: turing85/shared-github-workflows/.github/workflows/delete-branch-caches.yml@main
+    secrets:
+      github-token: ${{ secrets.GITHUB_TOKEN }}
