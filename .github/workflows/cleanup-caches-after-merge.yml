@@ -1,8 +1,7 @@
 name: Cleanup branch caches after merge
 on:
-  pull_request:
-    types:
-      - closed
+  delete:
+    ref_type: branch
   workflow_dispatch:
 
 permissions:
@@ -12,5 +11,7 @@ jobs:
   cleanup:
     name: Cleanup branch caches after merge
     uses: turing85/shared-github-workflows/.github/workflows/cleanup-branch-caches.yml@main
+    with:
+      branch-name: ${{ github.delete.ref }}
     secrets:
       github-token: ${{ secrets.GITHUB_TOKEN }}
