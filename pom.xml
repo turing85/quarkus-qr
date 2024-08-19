@@ -23,11 +23,15 @@
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
         <quarkus.platform.version>3.13.2</quarkus.platform.version>
-        <quarkus-cucumber.version>1.1.0</quarkus-cucumber.version>
 
         <!-- Dependency versions -->
         <lombok.version>1.18.34</lombok.version>
         <zxing.version>3.5.3</zxing.version>
+
+        <!-- Test dependency versions -->
+        <quarkus-cucumber.version>1.1.0</quarkus-cucumber.version>
+        <truth.version>1.4.4</truth.version>
+        <weld-junit5.version>4.0.3.Final</weld-junit5.version>
 
         <!-- Project setup -->
         <attach-elf.skip>true</attach-elf.skip>
@@ -198,7 +202,6 @@
                         <phase>package</phase>
                         <configuration>
                             <appendAssemblyId>true</appendAssemblyId>
-                            <finalName>elf</finalName>
                             <inlineDescriptors>
                                 <inlineDescriptor>
                                     <id>elf</id>
@@ -415,13 +418,13 @@
         <dependency>
             <groupId>org.jboss.weld</groupId>
             <artifactId>weld-junit5</artifactId>
-            <version>4.0.3.Final</version>
+            <version>${weld-junit5.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.google.truth</groupId>
             <artifactId>truth</artifactId>
-            <version>1.4.4</version>
+            <version>${truth.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
