@@ -1,0 +1,14 @@
+name: Cleanup caches after merge
+on:
+  pull_request:
+    types:
+      - closed
+  workflow_dispatch:
+
+permissions:
+  actions: write
+
+jobs:
+  cleanup:
+    name: Build
+    uses: turing85/shared-github-workflows/.github/workflows/delete-branch-caches.yml@main
