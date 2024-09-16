@@ -22,7 +22,7 @@
         <!-- Quarkus versions -->
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-        <quarkus.platform.version>3.14.3</quarkus.platform.version>
+        <quarkus.platform.version>3.14.4</quarkus.platform.version>
 
         <!-- Dependency versions -->
         <lombok.version>1.18.34</lombok.version>
