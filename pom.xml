@@ -384,18 +384,9 @@
 
         <!-- QR Code image generation -->
         <dependency>
-            <groupId>com.google.zxing</groupId>
-            <artifactId>core</artifactId>
-            <version>${zxing.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.zxing</groupId>
-            <artifactId>javase</artifactId>
-            <version>${zxing.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-awt</artifactId>
+            <groupId>io.quarkiverse.barcode</groupId>
+            <artifactId>quarkus-zxing</artifactId>
+            <version>0.0.2</version>
         </dependency>
 
         <!-- Test dependencies -->
