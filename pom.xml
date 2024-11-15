@@ -25,7 +25,7 @@
         <quarkus.platform.version>3.16.3</quarkus.platform.version>
 
         <!-- Dependency versions -->
-        <lombok.version>1.18.34</lombok.version>
+        <lombok.version>1.18.36</lombok.version>
         <zxing.version>3.5.3</zxing.version>
 
         <!-- Test dependency versions -->
