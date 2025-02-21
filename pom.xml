@@ -11,7 +11,7 @@
     <properties>
         <!-- Plugin versions -->
         <assembly-plugin.version>3.7.1</assembly-plugin.version>
-        <compiler-plugin.version>3.13.0</compiler-plugin.version>
+        <compiler-plugin.version>3.14.0</compiler-plugin.version>
         <dependency-check-maven.version>12.1.0</dependency-check-maven.version>
         <formatter-maven-plugin.version>2.25.0</formatter-maven-plugin.version>
         <impsort-maven-plugin.version>1.12.0</impsort-maven-plugin.version>
@@ -61,7 +61,7 @@
         <quarkus.docker.dockerfile-native-path>src/main/container/Containerfile.native-distroless</quarkus.docker.dockerfile-native-path>
         <quarkus.docker.dockerfile-jvm-path>src/main/container/Containerfile.temurin</quarkus.docker.dockerfile-jvm-path>
         <quarkus-maven-plugin.skip>false</quarkus-maven-plugin.skip>
-        <quarkus.native.builder-image>quay.io/quarkus/ubi-quarkus-mandrel-builder-image:23.1.4.0-Final-java21-2024-08-11@sha256:4407eee3091930c136de860e66cbdf728ba4e9feebd77eb09e186f630b08daac</quarkus.native.builder-image>
+        <quarkus.native.builder-image>quay.io/quarkus/ubi-quarkus-mandrel-builder-image:23.1.6.0-Final-java21-2025-02-16@sha256:29ac340720b6a374a02cfcde8c1d85d90ed9e0fc7391468addae217689d6ede5</quarkus.native.builder-image>
         <quarkus.native.container-build>true</quarkus.native.container-build>
         <quarkus.package.jar.add-runner-suffix>false</quarkus.package.jar.add-runner-suffix>
 
