@@ -12,18 +12,17 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 
 import io.quarkiverse.barcode.zxing.ZebraCrossing;
+import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Uni;
-import lombok.extern.log4j.Log4j2;
 
 @Path(QrCodeResource.PATH)
-@Log4j2
 public class QrCodeResource {
   public static final String PATH = "qr-code";
 
   @GET
   @Produces("image/png")
   public Uni<byte[]> getQrCode(@QueryParam("text") @Valid @NotNull @NotBlank String text) {
-    log.info("Generating qr-code for text: \"{}\"", text);
+    Log.infof("Generating qr-code for text: \"%s\"", text);
     //@formatter:off
     return Uni.createFrom().item(text)
         .map(encodedData -> URLDecoder.decode(encodedData, StandardCharsets.UTF_8))

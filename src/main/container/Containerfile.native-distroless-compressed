@@ -1,5 +1,5 @@
 ARG COMPRESSOR_IMAGE="docker.io/alpine:3.21.3@sha256:a8560b36e8b8210634f77d9f7f9efd7ffa463e380b75e2e74aff4511df3ef88c"
-ARG DISTROLESS_IMAGE="quay.io/quarkus/quarkus-distroless-image:2.0-2025-02-16@sha256:f6f89d76c7ce91038be8080eb2afbe2eb4b56667efd82a8456f96ddc8cfae007"
+ARG DISTROLESS_IMAGE="quay.io/quarkus/quarkus-distroless-image:2.0-2025-05-25@sha256:dd9777dffb6f3e04361bd29b6f052a936829a20c1e71534a64d8da9ffd19e901"
 
 FROM ${COMPRESSOR_IMAGE} AS compressor
 ARG UPX_INSTALLATION_COMMAND="apk add \
@@ -20,7 +20,7 @@ RUN upx \
   -o application-compressed \
   application
 
-FROM ${DISTROLESS_IMAGE} as runner
+FROM ${DISTROLESS_IMAGE} AS runner
 ARG APP_DIR=/deployment
 ARG UID=1001
 

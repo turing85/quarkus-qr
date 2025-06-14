@@ -3,6 +3,7 @@ package de.turing85.qr.code.generator.actor;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 import javax.imageio.ImageIO;
@@ -19,6 +20,7 @@ import com.google.zxing.common.HybridBinarizer;
 import de.turing85.qr.code.generator.QrCodeResource;
 import de.turing85.qr.code.generator.exceptionmapper.ErrorResponse;
 import io.restassured.response.ValidatableResponse;
+import org.jspecify.annotations.Nullable;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
@@ -27,7 +29,10 @@ import static io.restassured.RestAssured.when;
 public class QrCodeActor {
   private static final MultiFormatReader MULTI_FORMAT_READER = new MultiFormatReader();
 
+  @Nullable
   private String expectedText;
+
+  @Nullable
   private ValidatableResponse response;
 
   public void getQrCodeFor(String text) {
@@ -82,8 +87,13 @@ public class QrCodeActor {
 
   public void responseIsBadRequest() {
     try {
-      response.statusCode(Response.Status.BAD_REQUEST.getStatusCode());
-      ErrorResponse errorResponse = response.extract().body().as(ErrorResponse.class);
+      // @formatter:off
+      ErrorResponse errorResponse = Objects.requireNonNull(Optional.ofNullable(response)
+          .orElseThrow(() ->
+              new IllegalStateException("please call \"getQrCodeFor(String)\" first"))
+          .statusCode(Response.Status.BAD_REQUEST.getStatusCode())
+          .extract().body().as(ErrorResponse.class));
+      // @formatter:on
       Truth.assertThat(errorResponse.message()).isNotNull();
       Truth.assertThat(errorResponse.message()).isNotEmpty();
     } finally {
