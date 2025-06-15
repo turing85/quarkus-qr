@@ -32,10 +32,12 @@
         <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
         <quarkus.platform.version>3.23.3</quarkus.platform.version>
 
+        <!-- Quarkiverse versions -->
+        <quarkus-zxing.version>1.0.0</quarkus-zxing.version>
+
         <!-- Dependency versions -->
         <jspecify.version>1.0.0</jspecify.version>
         <lombok.version>1.18.38</lombok.version>
-        <zxing.version>3.5.3</zxing.version>
 
         <!-- Test dependency versions -->
         <quarkus-cucumber.version>1.1.0</quarkus-cucumber.version>
@@ -519,7 +521,7 @@
         <dependency>
             <groupId>io.quarkiverse.barcode</groupId>
             <artifactId>quarkus-zxing</artifactId>
-            <version>1.0.0</version>
+            <version>${quarkus-zxing.version}</version>
         </dependency>
 
         <!-- Test dependencies -->
