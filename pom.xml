@@ -152,6 +152,8 @@
                         <requireMavenVersion>
                             <version>${maven.version}</version>
                         </requireMavenVersion>
+                        <requirePluginVersions/>
+                        <requireReleaseDeps/>
                         <requireSameVersions>
                             <message>surefire and failsafe should use the same version</message>
                             <buildPlugins>
