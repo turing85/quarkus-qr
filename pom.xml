@@ -624,6 +624,7 @@
             <properties>
                 <attach-elf.skip>true</attach-elf.skip>
                 <attach-fast-jar.skip>true</attach-fast-jar.skip>
+                <enforcer-plugin.skip>true</enforcer-plugin.skip>
                 <formatter-maven-plugin.skip>true</formatter-maven-plugin.skip>
                 <impsort-maven-plugin.skip>true</impsort-maven-plugin.skip>
                 <quarkus.container-image.additional-tags>native</quarkus.container-image.additional-tags>
@@ -645,6 +646,7 @@
                 <attach-fast-jar.skip>true</attach-fast-jar.skip>
                 <dependency-check-maven.formats>junit</dependency-check-maven.formats>
                 <dependency-check-maven.skip>false</dependency-check-maven.skip>
+                <enforcer-plugin.skip>true</enforcer-plugin.skip>
                 <formatter-maven-plugin.skip>true</formatter-maven-plugin.skip>
                 <impsort-maven-plugin.skip>true</impsort-maven-plugin.skip>
                 <quarkus-maven-plugin.skip>true</quarkus-maven-plugin.skip>
@@ -662,6 +664,7 @@
                 <attach-elf.skip>true</attach-elf.skip>
                 <attach-fast-jar.skip>true</attach-fast-jar.skip>
                 <dependency-check-maven.skip>true</dependency-check-maven.skip>
+                <enforcer-plugin.skip>true</enforcer-plugin.skip>
                 <formatter-maven-plugin.skip>true</formatter-maven-plugin.skip>
                 <impsort-maven-plugin.skip>true</impsort-maven-plugin.skip>
             </properties>
