@@ -68,7 +68,7 @@
         <maven.compiler.parameters>true</maven.compiler.parameters>
         <maven.compiler.proc>full</maven.compiler.proc>
         <maven.compiler.release>21</maven.compiler.release>
-        <maven.version>3.9.10</maven.version>
+        <maven.version>3.9.9</maven.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -116,12 +116,14 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-clean-plugin</artifactId>
                 <version>${clean-plugin.version}</version>
             </plugin>
 
             <!-- phase: validate -->
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
                 <version>${enforcer-plugin.version}</version>
                 <executions>
@@ -210,6 +212,7 @@
 
             <!-- phase: compile -->
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>${resources-plugin.version}</version>
             </plugin>
@@ -293,6 +296,7 @@
 
             <!-- phase: package -->
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>${jar-plugin.version}</version>
             </plugin>
@@ -464,12 +468,14 @@
 
             <!-- phase: deploy -->
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
                 <version>${deploy-plugin.version}</version>
             </plugin>
 
             <!-- phase: site -->
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
                 <version>${site-plugin.version}</version>
             </plugin>
