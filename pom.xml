@@ -16,6 +16,7 @@
         <deploy-plugin.version>3.1.4</deploy-plugin.version>
         <enforcer-plugin.version>3.5.0</enforcer-plugin.version>
         <error-prone.version>2.38.0</error-prone.version>
+        <extra-enforcer-rules.version>1.10.0</extra-enforcer-rules.version>
         <formatter-maven-plugin.version>2.26.0</formatter-maven-plugin.version>
         <impsort-maven-plugin.version>1.12.0</impsort-maven-plugin.version>
         <install-plugin.version>3.1.4</install-plugin.version>
@@ -126,6 +127,13 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
                 <version>${enforcer-plugin.version}</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>extra-enforcer-rules</artifactId>
+                        <version>${extra-enforcer-rules.version}</version>
+                    </dependency>
+                </dependencies>
                 <executions>
                     <execution>
                         <phase>validate</phase>
@@ -137,6 +145,7 @@
                 <configuration>
                     <fail>true</fail>
                     <rules>
+                        <banCircularDependencies/>
                         <banDependencyManagementScope/>
                         <banDuplicatePomDependencyVersions/>
                         <banDynamicVersions>
@@ -149,7 +158,7 @@
                         </bannedPlugins>
                         <dependencyConvergence/>
                         <requireJavaVersion>
-                            <version>21</version>
+                            <version>${maven.compiler.release}</version>
                         </requireJavaVersion>
                         <requireMavenVersion>
                             <version>${maven.version}</version>
@@ -157,14 +166,10 @@
                         <requirePluginVersions/>
                         <requireReleaseDeps/>
                         <requireSameVersions>
-                            <message>surefire and failsafe should use the same version</message>
                             <buildPlugins>
                                 <plugin>org.apache.maven.plugins:maven-surefire-plugin</plugin>
                                 <plugin>org.apache.maven.plugins:maven-failsafe-plugin</plugin>
                             </buildPlugins>
-                            <reportPlugins>
-                                <plugin>org.apache.maven.plugins:maven-surefire-report-plugin</plugin>
-                            </reportPlugins>
                         </requireSameVersions>
                     </rules>
                     <skip>${enforcer-plugin.skip}</skip>
