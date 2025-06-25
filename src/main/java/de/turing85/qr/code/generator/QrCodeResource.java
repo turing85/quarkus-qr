@@ -1,8 +1,5 @@
 package de.turing85.qr.code.generator;
 
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
-
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -23,11 +20,7 @@ public class QrCodeResource {
   @Produces("image/png")
   public Uni<byte[]> getQrCode(@QueryParam("text") @Valid @NotNull @NotBlank String text) {
     Log.infof("Generating qr-code for text: \"%s\"", text);
-    //@formatter:off
-    return Uni.createFrom().item(text)
-        .map(encodedData -> URLDecoder.decode(encodedData, StandardCharsets.UTF_8))
-        .map(QrCodeResource::textToQrCode);
-    //@formatter:on
+    return Uni.createFrom().item(text).map(QrCodeResource::textToQrCode);
   }
 
   private static byte[] textToQrCode(String text) {
