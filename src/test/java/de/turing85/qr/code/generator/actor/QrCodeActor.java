@@ -3,7 +3,6 @@ package de.turing85.qr.code.generator.actor;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 
 import javax.imageio.ImageIO;
@@ -46,16 +45,13 @@ public class QrCodeActor {
 
   public void qrCodeDecodesToExpectedText() throws IOException, NotFoundException {
     try {
-      // @formatter:off
+    // @formatter:off
       byte[] actual = Optional.ofNullable(response)
-          .orElseThrow(() ->
-              new IllegalStateException("please call \"getQrCodeFor(String)\" first"))
+          .orElseThrow(() -> new IllegalStateException("please call \"getQrCodeFor(String)\" first"))
           .statusCode(Response.Status.OK.getStatusCode())
           .contentType("image/png")
           .extract().body().asByteArray();
       // @formatter:on
-      Truth.assertThat(actual).isNotNull();
-      Truth.assertThat(actual).isNotEmpty();
       Truth.assertThat(extractTextFromQrImage(actual)).isEqualTo(expectedText);
     } finally {
       clearState();
@@ -79,23 +75,20 @@ public class QrCodeActor {
   }
 
   public void getQrCodeForNoText() {
-    // @formatter:off
-    response = when().get(QrCodeResource.PATH)
-        .then();
-    // @formatter:on
+    response = when().get(QrCodeResource.PATH).then();
   }
 
   public void responseIsBadRequest() {
     try {
       // @formatter:off
-      ErrorResponse errorResponse = Objects.requireNonNull(Optional.ofNullable(response)
-          .orElseThrow(() ->
-              new IllegalStateException("please call \"getQrCodeFor(String)\" first"))
+      String errorMessage = Optional.ofNullable(response)
+          .orElseThrow(() -> new IllegalStateException("please call \"getQrCodeFor(String)\" first"))
           .statusCode(Response.Status.BAD_REQUEST.getStatusCode())
-          .extract().body().as(ErrorResponse.class));
+          .extract().body().as(ErrorResponse.class)
+          .message();
       // @formatter:on
-      Truth.assertThat(errorResponse.message()).isNotNull();
-      Truth.assertThat(errorResponse.message()).isNotEmpty();
+      Truth.assertThat(errorMessage).isNotNull();
+      Truth.assertThat(errorMessage).isNotEmpty();
     } finally {
       clearState();
     }
