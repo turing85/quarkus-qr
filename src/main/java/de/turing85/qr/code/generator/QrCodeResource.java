@@ -26,7 +26,7 @@ public class QrCodeResource {
     //@formatter:off
     return Uni.createFrom().item(text)
         .map(encodedData -> URLDecoder.decode(encodedData, StandardCharsets.UTF_8))
-        .onItem().transform(QrCodeResource::textToQrCode);
+        .map(QrCodeResource::textToQrCode);
     //@formatter:on
   }
 
