@@ -10,6 +10,7 @@
     <properties>
         <!-- Plugin versions -->
         <assembly-plugin.version>3.7.1</assembly-plugin.version>
+        <build-helper-maven-plugin.version>3.6.1</build-helper-maven-plugin.version>
         <compiler-plugin.version>3.14.0</compiler-plugin.version>
         <clean-plugin.version>3.5.0</clean-plugin.version>
         <dependency-check-maven.version>12.1.3</dependency-check-maven.version>
@@ -75,12 +76,15 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <quarkus.container-image.additional-tags>jvm</quarkus.container-image.additional-tags>
+        <quarkus.cyclonedx.skip>false</quarkus.cyclonedx.skip>
         <quarkus.docker.dockerfile-native-path>src/main/container/Containerfile.native-distroless</quarkus.docker.dockerfile-native-path>
         <quarkus.docker.dockerfile-jvm-path>src/main/container/Containerfile.temurin</quarkus.docker.dockerfile-jvm-path>
         <quarkus-maven-plugin.skip>false</quarkus-maven-plugin.skip>
         <quarkus.native.builder-image>quay.io/quarkus/ubi-quarkus-mandrel-builder-image:23.1.7.0-Final-java21-2025-05-25@sha256:4300e3d0d005323e9bfd786868ac3d69b2dbed480b7a821b49d869d355c262bd</quarkus.native.builder-image>
         <quarkus.native.container-build>true</quarkus.native.container-build>
         <quarkus.package.jar.add-runner-suffix>false</quarkus.package.jar.add-runner-suffix>
+
+        <source-plugin.skip>false</source-plugin.skip>
 
         <surefire-plugin.skip>false</surefire-plugin.skip>
     </properties>
@@ -116,6 +120,7 @@
 
     <build>
         <plugins>
+            <!-- phase: clean -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-clean-plugin</artifactId>
@@ -134,14 +139,6 @@
                         <version>${extra-enforcer-rules.version}</version>
                     </dependency>
                 </dependencies>
-                <executions>
-                    <execution>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>enforce</goal>
-                        </goals>
-                    </execution>
-                </executions>
                 <configuration>
                     <fail>true</fail>
                     <rules>
@@ -174,6 +171,14 @@
                     </rules>
                     <skip>${enforcer-plugin.skip}</skip>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <phase>validate</phase>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>net.revelc.code.formatter</groupId>
@@ -307,6 +312,47 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${source-plugin.version}</version>
+                <configuration>
+                    <skipSource>${source-plugin.skip}</skipSource>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                            <goal>test-jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>${build-helper-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sbom</id>
+                        <goals>
+                            <goal>attach-artifact</goal>
+                        </goals>
+                        <phase>package</phase>
+                        <configuration>
+                            <skipAttach>${quarkus.cyclonedx.skip}</skipAttach>
+                            <artifacts>
+                                <artifact>
+                                    <file>${project.build.directory}/quarkus-run-cyclonedx.json</file>
+                                    <type>json</type>
+                                    <classifier>sbom</classifier>
+                                </artifact>
+                            </artifacts>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>${assembly-plugin.version}</version>
                 <executions>
@@ -396,40 +442,6 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.owasp</groupId>
-                <artifactId>dependency-check-maven</artifactId>
-                <version>${dependency-check-maven.version}</version>
-                <configuration>
-                    <outputDirectory>${project.build.directory}/owasp</outputDirectory>
-                    <failBuildOnCVSS>0</failBuildOnCVSS>
-                    <formats>${dependency-check-maven.formats}</formats>
-                    <skip>${dependency-check-maven.skip}</skip>
-                    <suppressionFile>src/test/resources/owasp-dependency-check.xml</suppressionFile>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>${dependency-check-maven.goal}</goal>
-                        </goals>
-                        <phase>verify</phase>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>${source-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                        <phase>verify</phase>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>${jacoco-maven-plugin.version}</version>
@@ -459,7 +471,27 @@
                         <goals>
                             <goal>check</goal>
                         </goals>
-                        <phase>post-integration-test</phase>
+                        <phase>verify</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <version>${dependency-check-maven.version}</version>
+                <configuration>
+                    <outputDirectory>${project.build.directory}/owasp</outputDirectory>
+                    <failBuildOnCVSS>0</failBuildOnCVSS>
+                    <formats>${dependency-check-maven.formats}</formats>
+                    <skip>${dependency-check-maven.skip}</skip>
+                    <suppressionFile>src/test/resources/owasp-dependency-check.xml</suppressionFile>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>${dependency-check-maven.goal}</goal>
+                        </goals>
+                        <phase>verify</phase>
                     </execution>
                 </executions>
             </plugin>
@@ -608,8 +640,6 @@
                 </property>
             </activation>
             <properties>
-                <attach-elf.skip>true</attach-elf.skip>
-                <attach-fast-jar.skip>true</attach-fast-jar.skip>
                 <formatter-maven-plugin.goal>validate</formatter-maven-plugin.goal>
                 <impsort-maven-plugin.goal>check</impsort-maven-plugin.goal>
             </properties>
@@ -622,15 +652,17 @@
                 </property>
             </activation>
             <properties>
-                <attach-elf.skip>true</attach-elf.skip>
+                <attach-elf.skip>false</attach-elf.skip>
                 <attach-fast-jar.skip>true</attach-fast-jar.skip>
                 <enforcer-plugin.skip>true</enforcer-plugin.skip>
                 <formatter-maven-plugin.skip>true</formatter-maven-plugin.skip>
                 <impsort-maven-plugin.skip>true</impsort-maven-plugin.skip>
                 <quarkus.container-image.additional-tags>native</quarkus.container-image.additional-tags>
+                <quarkus.cyclonedx.skip>true</quarkus.cyclonedx.skip>
                 <quarkus.docker.dockerfile-native-path>src/main/container/Containerfile.native-distroless-compressed</quarkus.docker.dockerfile-native-path>
                 <quarkus.native.enabled>true</quarkus.native.enabled>
                 <quarkus.package.jar.add-runner-suffix>true</quarkus.package.jar.add-runner-suffix>
+                <source-plugin.skip>true</source-plugin.skip>
                 <surefire-plugin.skip>true</surefire-plugin.skip>
             </properties>
         </profile>
@@ -642,15 +674,16 @@
                 </property>
             </activation>
             <properties>
-                <attach-elf.skip>true</attach-elf.skip>
                 <attach-fast-jar.skip>true</attach-fast-jar.skip>
                 <dependency-check-maven.formats>junit</dependency-check-maven.formats>
                 <dependency-check-maven.skip>false</dependency-check-maven.skip>
                 <enforcer-plugin.skip>true</enforcer-plugin.skip>
                 <formatter-maven-plugin.skip>true</formatter-maven-plugin.skip>
                 <impsort-maven-plugin.skip>true</impsort-maven-plugin.skip>
+                <quarkus.cyclonedx.skip>true</quarkus.cyclonedx.skip>
                 <quarkus-maven-plugin.skip>true</quarkus-maven-plugin.skip>
                 <skipTests>true</skipTests>
+                <source-plugin.skip>true</source-plugin.skip>
             </properties>
         </profile>
         <profile>
@@ -661,7 +694,6 @@
                 </property>
             </activation>
             <properties>
-                <attach-elf.skip>true</attach-elf.skip>
                 <attach-fast-jar.skip>true</attach-fast-jar.skip>
                 <dependency-check-maven.skip>true</dependency-check-maven.skip>
                 <enforcer-plugin.skip>true</enforcer-plugin.skip>
@@ -682,8 +714,10 @@
                 <attach-elf.skip>false</attach-elf.skip>
                 <attach-fast-jar.skip>true</attach-fast-jar.skip>
                 <quarkus.container-image.additional-tags>native</quarkus.container-image.additional-tags>
+                <quarkus.cyclonedx.skip>true</quarkus.cyclonedx.skip>
                 <quarkus.native.enabled>true</quarkus.native.enabled>
                 <quarkus.package.jar.add-runner-suffix>true</quarkus.package.jar.add-runner-suffix>
+                <source-plugin.skip>true</source-plugin.skip>
             </properties>
         </profile>
         <profile>
@@ -697,13 +731,26 @@
                 <attach-elf.skip>false</attach-elf.skip>
                 <attach-fast-jar.skip>true</attach-fast-jar.skip>
                 <quarkus.container-image.additional-tags>native</quarkus.container-image.additional-tags>
+                <quarkus.cyclonedx.skip>true</quarkus.cyclonedx.skip>
                 <quarkus.docker.dockerfile-native-path>src/main/container/Containerfile.native-distroless-compressed</quarkus.docker.dockerfile-native-path>
                 <quarkus.native.enabled>true</quarkus.native.enabled>
                 <quarkus.package.jar.add-runner-suffix>true</quarkus.package.jar.add-runner-suffix>
+                <source-plugin.skip>true</source-plugin.skip>
             </properties>
         </profile>
 
         <!-- skip profiles -->
+        <profile>
+            <id>skip-attach-sources</id>
+            <activation>
+                <property>
+                    <name>skip-attach-sources</name>
+                </property>
+            </activation>
+            <properties>
+                <source-plugin.skip>true</source-plugin.skip>
+            </properties>
+        </profile>
         <profile>
             <id>skip-cyclonedx</id>
             <activation>
