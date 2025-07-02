@@ -15,7 +15,7 @@
         <clean-plugin.version>3.5.0</clean-plugin.version>
         <dependency-check-maven.version>12.1.3</dependency-check-maven.version>
         <deploy-plugin.version>3.1.4</deploy-plugin.version>
-        <enforcer-plugin.version>3.5.0</enforcer-plugin.version>
+        <enforcer-plugin.version>3.6.0</enforcer-plugin.version>
         <error-prone.version>2.39.0</error-prone.version>
         <extra-enforcer-rules.version>1.10.0</extra-enforcer-rules.version>
         <formatter-maven-plugin.version>2.27.0</formatter-maven-plugin.version>
@@ -163,10 +163,10 @@
                         <requirePluginVersions/>
                         <requireReleaseDeps/>
                         <requireSameVersions>
-                            <buildPlugins>
+                            <plugins>
                                 <plugin>org.apache.maven.plugins:maven-surefire-plugin</plugin>
                                 <plugin>org.apache.maven.plugins:maven-failsafe-plugin</plugin>
-                            </buildPlugins>
+                            </plugins>
                         </requireSameVersions>
                     </rules>
                     <skip>${enforcer-plugin.skip}</skip>
