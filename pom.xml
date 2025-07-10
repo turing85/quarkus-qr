@@ -498,6 +498,7 @@
 
             <!-- phase: install -->
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-install-plugin</artifactId>
                 <version>${install-plugin.version}</version>
             </plugin>
