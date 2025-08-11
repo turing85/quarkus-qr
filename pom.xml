@@ -77,10 +77,14 @@
 
         <quarkus.container-image.additional-tags>jvm</quarkus.container-image.additional-tags>
         <quarkus.cyclonedx.skip>false</quarkus.cyclonedx.skip>
-        <quarkus.docker.dockerfile-native-path>src/main/container/Containerfile.native-distroless</quarkus.docker.dockerfile-native-path>
         <quarkus.docker.dockerfile-jvm-path>src/main/container/Containerfile.temurin</quarkus.docker.dockerfile-jvm-path>
+        <quarkus.docker.dockerfile-native-path>src/main/container/Containerfile.native-distroless</quarkus.docker.dockerfile-native-path>
         <quarkus-maven-plugin.skip>false</quarkus-maven-plugin.skip>
         <quarkus.native.builder-image>quay.io/quarkus/ubi-quarkus-mandrel-builder-image:23.1.7.0-Final-java21-2025-07-20@sha256:f65e067c64584a8b54c64366dfb0c981891838fce308374e2392a25ba2c5b20d</quarkus.native.builder-image>
+        <quarkus.native.builder-image.pull>missing</quarkus.native.builder-image.pull>
+        <quarkus.native.compression.container-build>true</quarkus.native.compression.container-build>
+        <quarkus.native.compression.enabled>false</quarkus.native.compression.enabled>
+        <quarkus.native.compression.level>5</quarkus.native.compression.level>
         <quarkus.native.container-build>true</quarkus.native.container-build>
         <quarkus.package.jar.add-runner-suffix>false</quarkus.package.jar.add-runner-suffix>
 
@@ -660,10 +664,8 @@
                 <impsort-maven-plugin.skip>true</impsort-maven-plugin.skip>
                 <quarkus.container-image.additional-tags>native</quarkus.container-image.additional-tags>
                 <quarkus.cyclonedx.skip>true</quarkus.cyclonedx.skip>
-                <quarkus.native.enabled>true</quarkus.native.enabled>
-                <quarkus.native.compression.container-build>true</quarkus.native.compression.container-build>
                 <quarkus.native.compression.enabled>true</quarkus.native.compression.enabled>
-                <quarkus.native.compression.level>5</quarkus.native.compression.level>
+                <quarkus.native.enabled>true</quarkus.native.enabled>
                 <quarkus.package.jar.add-runner-suffix>true</quarkus.package.jar.add-runner-suffix>
                 <source-plugin.skip>true</source-plugin.skip>
                 <surefire-plugin.skip>true</surefire-plugin.skip>
@@ -735,10 +737,8 @@
                 <attach-fast-jar.skip>true</attach-fast-jar.skip>
                 <quarkus.container-image.additional-tags>native</quarkus.container-image.additional-tags>
                 <quarkus.cyclonedx.skip>true</quarkus.cyclonedx.skip>
-                <quarkus.native.enabled>true</quarkus.native.enabled>
-                <quarkus.native.compression.container-build>true</quarkus.native.compression.container-build>
                 <quarkus.native.compression.enabled>true</quarkus.native.compression.enabled>
-                <quarkus.native.compression.level>5</quarkus.native.compression.level>
+                <quarkus.native.enabled>true</quarkus.native.enabled>
                 <quarkus.package.jar.add-runner-suffix>true</quarkus.package.jar.add-runner-suffix>
                 <source-plugin.skip>true</source-plugin.skip>
             </properties>
