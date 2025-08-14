@@ -32,7 +32,7 @@
         <!-- Quarkus versions -->
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-        <quarkus.platform.version>3.25.2</quarkus.platform.version>
+        <quarkus.platform.version>3.25.3</quarkus.platform.version>
 
         <!-- Quarkiverse versions -->
         <quarkus-zxing.version>1.0.1</quarkus-zxing.version>
