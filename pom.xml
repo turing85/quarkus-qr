@@ -35,7 +35,7 @@
         <quarkus.platform.version>3.26.2</quarkus.platform.version>
 
         <!-- Quarkiverse versions -->
-        <quarkus-zxing.version>1.0.1</quarkus-zxing.version>
+        <quarkus-zxing.version>1.0.2</quarkus-zxing.version>
 
         <!-- Dependency versions -->
         <jspecify.version>1.0.0</jspecify.version>
