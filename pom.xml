@@ -70,7 +70,7 @@
         <maven.compiler.parameters>true</maven.compiler.parameters>
         <maven.compiler.proc>full</maven.compiler.proc>
         <maven.compiler.release>21</maven.compiler.release>
-        <maven.version>3.9.9</maven.version>
+        <maven.version>3.9.11</maven.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
