@@ -27,7 +27,7 @@
         <resources-plugin.version>3.3.1</resources-plugin.version>
         <site-plugin.version>3.21.0</site-plugin.version>
         <source-plugin.version>3.3.1</source-plugin.version>
-        <surefire-plugin.version>3.5.3</surefire-plugin.version>
+        <surefire-plugin.version>3.5.4</surefire-plugin.version>
 
         <!-- Quarkus versions -->
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
