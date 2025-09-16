@@ -44,7 +44,7 @@
         <!-- Test dependency versions -->
         <quarkus-cucumber.version>1.1.0</quarkus-cucumber.version>
         <truth.version>1.4.5</truth.version>
-        <weld-junit5.version>5.0.1.Final</weld-junit5.version>
+        <weld-junit5.version>5.0.2.Final</weld-junit5.version>
 
         <!-- Project setup -->
         <attach-elf.skip>true</attach-elf.skip>
