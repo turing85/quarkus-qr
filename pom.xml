@@ -23,7 +23,7 @@
         <install-plugin.version>3.1.4</install-plugin.version>
         <jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
         <jar-plugin.version>3.4.2</jar-plugin.version>
-        <nullaway.version>0.12.9</nullaway.version>
+        <nullaway.version>0.12.10</nullaway.version>
         <resources-plugin.version>3.3.1</resources-plugin.version>
         <site-plugin.version>3.21.0</site-plugin.version>
         <source-plugin.version>3.3.1</source-plugin.version>
