@@ -9,25 +9,25 @@
 
     <properties>
         <!-- Plugin versions -->
-        <assembly-plugin.version>3.7.1</assembly-plugin.version>
         <build-helper-maven-plugin.version>3.6.1</build-helper-maven-plugin.version>
-        <compiler-plugin.version>3.14.1</compiler-plugin.version>
-        <clean-plugin.version>3.5.0</clean-plugin.version>
         <dependency-check-maven.version>12.1.9</dependency-check-maven.version>
-        <deploy-plugin.version>3.1.4</deploy-plugin.version>
-        <enforcer-plugin.version>3.6.2</enforcer-plugin.version>
         <error-prone.version>2.44.0</error-prone.version>
         <extra-enforcer-rules.version>1.11.0</extra-enforcer-rules.version>
         <formatter-maven-plugin.version>2.29.0</formatter-maven-plugin.version>
         <impsort-maven-plugin.version>1.12.0</impsort-maven-plugin.version>
-        <install-plugin.version>3.1.4</install-plugin.version>
         <jacoco-maven-plugin.version>0.8.14</jacoco-maven-plugin.version>
-        <jar-plugin.version>3.5.0</jar-plugin.version>
+        <maven-assembly-plugin.version>3.7.1</maven-assembly-plugin.version>
+        <maven-compiler-plugin.version>3.14.1</maven-compiler-plugin.version>
+        <maven-clean-plugin.version>3.5.0</maven-clean-plugin.version>
+        <maven-deploy-plugin.version>3.1.4</maven-deploy-plugin.version>
+        <maven-enforcer-plugin.version>3.6.2</maven-enforcer-plugin.version>
+        <maven-install-plugin.version>3.1.4</maven-install-plugin.version>
+        <maven-jar-plugin.version>3.5.0</maven-jar-plugin.version>
+        <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
+        <maven-site-plugin.version>3.21.0</maven-site-plugin.version>
+        <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
+        <maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
         <nullaway.version>0.12.12</nullaway.version>
-        <resources-plugin.version>3.3.1</resources-plugin.version>
-        <site-plugin.version>3.21.0</site-plugin.version>
-        <source-plugin.version>3.3.1</source-plugin.version>
-        <surefire-plugin.version>3.5.4</surefire-plugin.version>
 
         <!-- Quarkus versions -->
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
@@ -54,8 +54,6 @@
         <dependency-check-maven.skip>true</dependency-check-maven.skip>
         <dependency-check-maven.formats>html,junit</dependency-check-maven.formats>
 
-        <enforcer-plugin.skip>false</enforcer-plugin.skip>
-
         <failsafe-plugin.skip>false</failsafe-plugin.skip>
 
         <formatter-maven-plugin.goal>format</formatter-maven-plugin.goal>
@@ -72,6 +70,10 @@
         <maven.compiler.release>21</maven.compiler.release>
         <maven.version>3.9.11</maven.version>
 
+        <maven-enforcer-plugin.skip>false</maven-enforcer-plugin.skip>
+        <maven-source-plugin.skip>false</maven-source-plugin.skip>
+        <maven-surefire-plugin.skip>false</maven-surefire-plugin.skip>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
@@ -87,10 +89,6 @@
         <quarkus.native.compression.level>5</quarkus.native.compression.level>
         <quarkus.native.container-build>true</quarkus.native.container-build>
         <quarkus.package.jar.add-runner-suffix>false</quarkus.package.jar.add-runner-suffix>
-
-        <source-plugin.skip>false</source-plugin.skip>
-
-        <surefire-plugin.skip>false</surefire-plugin.skip>
     </properties>
 
     <url>https://github.com/turing85/quarkus-qr</url>
@@ -128,14 +126,14 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-clean-plugin</artifactId>
-                <version>${clean-plugin.version}</version>
+                <version>${maven-clean-plugin.version}</version>
             </plugin>
 
             <!-- phase: validate -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <version>${enforcer-plugin.version}</version>
+                <version>${maven-enforcer-plugin.version}</version>
                 <dependencies>
                     <dependency>
                         <groupId>org.codehaus.mojo</groupId>
@@ -173,7 +171,7 @@
                             </plugins>
                         </requireSameVersions>
                     </rules>
-                    <skip>${enforcer-plugin.skip}</skip>
+                    <skip>${maven-enforcer-plugin.skip}</skip>
                 </configuration>
                 <executions>
                     <execution>
@@ -228,12 +226,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>${resources-plugin.version}</version>
+                <version>${maven-resources-plugin.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${compiler-plugin.version}</version>
+                <version>${maven-compiler-plugin.version}</version>
                 <configuration>
                     <annotationProcessorPaths>
                         <path>
@@ -298,13 +296,13 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>${surefire-plugin.version}</version>
+                <version>${maven-surefire-plugin.version}</version>
                 <configuration>
                     <systemPropertyVariables>
                         <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
                         <maven.home>${maven.home}</maven.home>
                     </systemPropertyVariables>
-                    <skip>${surefire-plugin.skip}</skip>
+                    <skip>${maven-surefire-plugin.skip}</skip>
                 </configuration>
             </plugin>
 
@@ -312,14 +310,14 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>${jar-plugin.version}</version>
+                <version>${maven-jar-plugin.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>${source-plugin.version}</version>
+                <version>${maven-source-plugin.version}</version>
                 <configuration>
-                    <skipSource>${source-plugin.skip}</skipSource>
+                    <skipSource>${maven-source-plugin.skip}</skipSource>
                 </configuration>
                 <executions>
                     <execution>
@@ -358,7 +356,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>${assembly-plugin.version}</version>
+                <version>${maven-assembly-plugin.version}</version>
                 <executions>
                     <execution>
                         <id>tar-gz-fast-jar</id>
@@ -427,7 +425,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>${surefire-plugin.version}</version>
+                <version>${maven-surefire-plugin.version}</version>
                 <configuration>
                     <systemPropertyVariables>
                         <native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>
@@ -504,21 +502,21 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-install-plugin</artifactId>
-                <version>${install-plugin.version}</version>
+                <version>${maven-install-plugin.version}</version>
             </plugin>
 
             <!-- phase: deploy -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
-                <version>${deploy-plugin.version}</version>
+                <version>${maven-deploy-plugin.version}</version>
             </plugin>
 
             <!-- phase: site -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
-                <version>${site-plugin.version}</version>
+                <version>${maven-site-plugin.version}</version>
             </plugin>
         </plugins>
     </build>
@@ -659,7 +657,7 @@
             <properties>
                 <attach-elf.skip>false</attach-elf.skip>
                 <attach-fast-jar.skip>true</attach-fast-jar.skip>
-                <enforcer-plugin.skip>true</enforcer-plugin.skip>
+                <maven-enforcer-plugin.skip>true</maven-enforcer-plugin.skip>
                 <formatter-maven-plugin.skip>true</formatter-maven-plugin.skip>
                 <impsort-maven-plugin.skip>true</impsort-maven-plugin.skip>
                 <quarkus.container-image.additional-tags>native</quarkus.container-image.additional-tags>
@@ -667,8 +665,8 @@
                 <quarkus.native.compression.enabled>true</quarkus.native.compression.enabled>
                 <quarkus.native.enabled>true</quarkus.native.enabled>
                 <quarkus.package.jar.add-runner-suffix>true</quarkus.package.jar.add-runner-suffix>
-                <source-plugin.skip>true</source-plugin.skip>
-                <surefire-plugin.skip>true</surefire-plugin.skip>
+                <maven-source-plugin.skip>true</maven-source-plugin.skip>
+                <maven-surefire-plugin.skip>true</maven-surefire-plugin.skip>
             </properties>
         </profile>
         <profile>
@@ -682,13 +680,13 @@
                 <attach-fast-jar.skip>true</attach-fast-jar.skip>
                 <dependency-check-maven.formats>junit</dependency-check-maven.formats>
                 <dependency-check-maven.skip>false</dependency-check-maven.skip>
-                <enforcer-plugin.skip>true</enforcer-plugin.skip>
+                <maven-enforcer-plugin.skip>true</maven-enforcer-plugin.skip>
                 <formatter-maven-plugin.skip>true</formatter-maven-plugin.skip>
                 <impsort-maven-plugin.skip>true</impsort-maven-plugin.skip>
                 <quarkus.cyclonedx.skip>true</quarkus.cyclonedx.skip>
                 <quarkus-maven-plugin.skip>true</quarkus-maven-plugin.skip>
                 <skipTests>true</skipTests>
-                <source-plugin.skip>true</source-plugin.skip>
+                <maven-source-plugin.skip>true</maven-source-plugin.skip>
             </properties>
         </profile>
         <profile>
@@ -701,7 +699,7 @@
             <properties>
                 <attach-fast-jar.skip>true</attach-fast-jar.skip>
                 <dependency-check-maven.skip>true</dependency-check-maven.skip>
-                <enforcer-plugin.skip>true</enforcer-plugin.skip>
+                <maven-enforcer-plugin.skip>true</maven-enforcer-plugin.skip>
                 <formatter-maven-plugin.skip>true</formatter-maven-plugin.skip>
                 <impsort-maven-plugin.skip>true</impsort-maven-plugin.skip>
             </properties>
@@ -722,7 +720,7 @@
                 <quarkus.cyclonedx.skip>true</quarkus.cyclonedx.skip>
                 <quarkus.native.enabled>true</quarkus.native.enabled>
                 <quarkus.package.jar.add-runner-suffix>true</quarkus.package.jar.add-runner-suffix>
-                <source-plugin.skip>true</source-plugin.skip>
+                <maven-source-plugin.skip>true</maven-source-plugin.skip>
             </properties>
         </profile>
         <profile>
@@ -740,7 +738,7 @@
                 <quarkus.native.compression.enabled>true</quarkus.native.compression.enabled>
                 <quarkus.native.enabled>true</quarkus.native.enabled>
                 <quarkus.package.jar.add-runner-suffix>true</quarkus.package.jar.add-runner-suffix>
-                <source-plugin.skip>true</source-plugin.skip>
+                <maven-source-plugin.skip>true</maven-source-plugin.skip>
             </properties>
         </profile>
 
@@ -753,7 +751,7 @@
                 </property>
             </activation>
             <properties>
-                <source-plugin.skip>true</source-plugin.skip>
+                <maven-source-plugin.skip>true</maven-source-plugin.skip>
             </properties>
         </profile>
         <profile>
@@ -775,7 +773,7 @@
                 </property>
             </activation>
             <properties>
-                <enforcer-plugin.skip>true</enforcer-plugin.skip>
+                <maven-enforcer-plugin.skip>true</maven-enforcer-plugin.skip>
             </properties>
         </profile>
         <profile>
@@ -809,7 +807,7 @@
                 </property>
             </activation>
             <properties>
-                <surefire-plugin.skip>true</surefire-plugin.skip>
+                <maven-surefire-plugin.skip>true</maven-surefire-plugin.skip>
             </properties>
         </profile>
     </profiles>
