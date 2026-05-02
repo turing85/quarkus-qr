@@ -28,14 +28,13 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' || github.repository != 'turing85/quarkus-qr' }}
 
 permissions:
-  actions: write
   checks: write
   pull-requests: write
 
 jobs:
   build:
     name: Build
-    uses: turing85/shared-github-workflows/.github/workflows/turing85-maven-quarkus-single-module-build.yml@main
+    uses: turing85/shared-github-workflows/.github/workflows/turing85-maven-quarkus-single-module-build.yml@feature/update-publish-report
     with:
       graalvm-version: mandrel-25.0.1.0-Final
       java-version: 25

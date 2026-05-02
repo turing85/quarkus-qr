@@ -12,7 +12,7 @@ permissions:
 jobs:
   nightly-owasp-scan:
     name: Nightly OWASP Scan
-    uses: turing85/shared-github-workflows/.github/workflows/turing85-maven-owasp-scan-quarkus.yml@main
+    uses: turing85/shared-github-workflows/.github/workflows/turing85-maven-owasp-scan-quarkus.yml@feature/update-publish-report
     with:
       graalvm-version: mandrel-25.0.1.0-Final
       java-version: 25
