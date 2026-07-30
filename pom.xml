@@ -38,7 +38,7 @@
         <quarkus-zxing.version>1.2.0</quarkus-zxing.version>
 
         <!-- Dependency versions -->
-        <jspecify.version>1.0.0</jspecify.version>
+        <jspecify.version>1.0.1</jspecify.version>
         <lombok.version>1.18.46</lombok.version>
 
         <!-- Test dependency versions -->
