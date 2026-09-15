@@ -9,7 +9,7 @@
 
     <properties>
         <!-- Plugin versions -->
-        <build-helper-maven-plugin.version>3.6.1</build-helper-maven-plugin.version>
+        <build-helper-maven-plugin.version>3.6.2</build-helper-maven-plugin.version>
         <dependency-check-maven.version>13.0.0</dependency-check-maven.version>
         <error-prone.version>2.50.0</error-prone.version>
         <extra-enforcer-rules.version>1.12.1</extra-enforcer-rules.version>
