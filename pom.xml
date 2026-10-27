@@ -77,7 +77,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <quarkus.container-image.additional-tags>jvm</quarkus.container-image.additional-tags>
-        <quarkus.cyclonedx.skip>false</quarkus.cyclonedx.skip>
+        <quarkus.cyclonedx.enabled>true</quarkus.cyclonedx.enabled>
         <quarkus.docker.dockerfile-jvm-path>src/main/container/Containerfile.temurin</quarkus.docker.dockerfile-jvm-path>
         <quarkus.docker.dockerfile-native-path>src/main/container/Containerfile.native-distroless</quarkus.docker.dockerfile-native-path>
         <quarkus-maven-plugin.skip>false</quarkus-maven-plugin.skip>
@@ -346,6 +346,19 @@
                 <artifactId>build-helper-maven-plugin</artifactId>
                 <version>${build-helper-maven-plugin.version}</version>
                 <executions>
+                    <execution>
+                        <id>set-quarkus-cyclone-dx-skip</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>bsh-property</goal>
+                        </goals>
+                        <configuration>
+                            <source>quarkus.cyclonedx.skip = !${quarkus.cyclonedx.enabled};</source>
+                            <properties>
+                                <property>quarkus.cyclonedx.skip</property>
+                            </properties>
+                        </configuration>
+                    </execution>
                     <execution>
                         <id>attach-sbom</id>
                         <goals>
@@ -672,7 +685,7 @@
                 <formatter-maven-plugin.skip>true</formatter-maven-plugin.skip>
                 <impsort-maven-plugin.skip>true</impsort-maven-plugin.skip>
                 <quarkus.container-image.additional-tags>native</quarkus.container-image.additional-tags>
-                <quarkus.cyclonedx.skip>true</quarkus.cyclonedx.skip>
+                <quarkus.cyclonedx.enabled>false</quarkus.cyclonedx.enabled>
                 <quarkus.native.compression.enabled>true</quarkus.native.compression.enabled>
                 <quarkus.native.enabled>true</quarkus.native.enabled>
                 <quarkus.package.jar.add-runner-suffix>true</quarkus.package.jar.add-runner-suffix>
@@ -694,7 +707,7 @@
                 <maven-enforcer-plugin.skip>true</maven-enforcer-plugin.skip>
                 <formatter-maven-plugin.skip>true</formatter-maven-plugin.skip>
                 <impsort-maven-plugin.skip>true</impsort-maven-plugin.skip>
-                <quarkus.cyclonedx.skip>true</quarkus.cyclonedx.skip>
+                <quarkus.cyclonedx.enabled>false</quarkus.cyclonedx.enabled>
                 <quarkus-maven-plugin.skip>true</quarkus-maven-plugin.skip>
                 <skipTests>true</skipTests>
                 <maven-source-plugin.skip>true</maven-source-plugin.skip>
@@ -728,7 +741,7 @@
                 <attach-elf.skip>false</attach-elf.skip>
                 <attach-fast-jar.skip>true</attach-fast-jar.skip>
                 <quarkus.container-image.additional-tags>native</quarkus.container-image.additional-tags>
-                <quarkus.cyclonedx.skip>true</quarkus.cyclonedx.skip>
+                <quarkus.cyclonedx.enabled>false</quarkus.cyclonedx.enabled>
                 <quarkus.native.enabled>true</quarkus.native.enabled>
                 <quarkus.package.jar.add-runner-suffix>true</quarkus.package.jar.add-runner-suffix>
                 <maven-source-plugin.skip>true</maven-source-plugin.skip>
@@ -745,7 +758,7 @@
                 <attach-elf.skip>false</attach-elf.skip>
                 <attach-fast-jar.skip>true</attach-fast-jar.skip>
                 <quarkus.container-image.additional-tags>native</quarkus.container-image.additional-tags>
-                <quarkus.cyclonedx.skip>true</quarkus.cyclonedx.skip>
+                <quarkus.cyclonedx.enabled>false</quarkus.cyclonedx.enabled>
                 <quarkus.native.compression.enabled>true</quarkus.native.compression.enabled>
                 <quarkus.native.enabled>true</quarkus.native.enabled>
                 <quarkus.package.jar.add-runner-suffix>true</quarkus.package.jar.add-runner-suffix>
@@ -773,7 +786,7 @@
                 </property>
             </activation>
             <properties>
-                <quarkus.cyclonedx.skip>true</quarkus.cyclonedx.skip>
+                <quarkus.cyclonedx.enabled>false</quarkus.cyclonedx.enabled>
             </properties>
         </profile>
         <profile>
